@@ -64,7 +64,7 @@ function Carousel({ items }) {
   return (
     <>
     <Title>
-        Gallary
+        Gallery
     </Title>
     <CarouselContainer>
       <CarouselWrapper
