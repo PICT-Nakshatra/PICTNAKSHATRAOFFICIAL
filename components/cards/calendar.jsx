@@ -330,7 +330,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 55vh;
+  height: 65vh;
   flex-direction: column;
   background-color: #121212; /* Dark background */
   color: white; /* White text */
