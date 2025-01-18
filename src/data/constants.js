@@ -110,32 +110,27 @@ export const tabs = [
 
 export const teamData = [
   {
-    name: "Co-founder 1",
-    title: "Co-founder",
-    image: "/images/cofounder1.jpg",
-    links: ["Home", "About", "Contact"],
-    profession: "Co-founder",
+    name: "Pranav Kodlinge",
+    title: "Core team member",
+    image: "/pranav.jpeg",
+    links: 'linkedin.com/in/pranav-kodlinge',
+    desc: "Machine Learning Expert",
+  },  
+];
+
+export const webData1 = [
+  {
+    name: "Aayush Agrawal",
+    title: "Full Stack Developer",
+    image: "/ProfAayush.JPG",
+    links: 'www.linkedin.com/in/aayush-agrawal1904',
+    desc: "Passionate about coding and problem-solving",
   },
   {
-    name: "Co-founder 2",
-    title: "Co-founder",
-    image: "/images/cofounder2.jpg",
-    links: ["Home", "About", "Contact"],
-    profession: "Co-founder",
-  },
-  // Add more co-founders here (total 10)
-  {
-    name: "Developer 1",
-    title: "Developer",
-    image: "/images/developer1.jpg",
-    links: ["Home", "Projects", "Contact"],
-    profession: "Developer",
-  },
-  {
-    name: "Developer 2",
-    title: "Developer",
-    image: "/images/developer2.jpg",
-    links: ["Home", "Projects", "Contact"],
-    profession: "Developer",
+    name: "Shriniwas Prachand",
+    title: "Backend Developer",
+    image: "/Shriniwas.jpeg",
+    links: 'linkedin.com/in/shriniwas-prachand',
+    desc: "Experienced in Backend Developement",
   },
 ];
