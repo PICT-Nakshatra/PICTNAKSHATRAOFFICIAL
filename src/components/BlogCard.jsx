@@ -19,9 +19,8 @@ const CardContainer = styled.div`
   }
 
   @media only screen and (max-width: 768px) {
-    padding: 12px;
-    height: 180px;
-    width: 180px;
+    padding: 15px;
+    width: 300px;
   }
 `;
 

@@ -113,7 +113,7 @@ export const teamData = [
     name: "Pranav Kodlinge",
     title: "Co-Founder",
     image: "/pranav.jpeg",
-    links: 'linkedin.com/in/pranav-kodlinge',
+    links: 'https://www.linkedin.com/in/pranav-kodlinge/',
     desc: "AIML Expert and Technical lead",
   },  
   {
@@ -141,7 +141,7 @@ export const teamData = [
     name: "Sanket Naikwade",
     title: "Founding Member",
     image: "/PHOTO-2025-01-18-22-01-02.jpg",
-    links: 'linkedin.com/in/sanket-naikwade-93b9012b8',
+    links: 'https://www.linkedin.com/in/sanket-naikwade-93b9012b8/',
     desc: "Social Media Designing Head",
   },  
   {
