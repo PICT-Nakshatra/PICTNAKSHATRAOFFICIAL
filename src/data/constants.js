@@ -104,7 +104,7 @@ export const tabs = [
   {
     title: 'Is there a membership fee?',
     description:
-      'There is no Membership fee to join the Club.Membership fees, if any, will depend on the club activities, such as organizing events, buying equipment, or covering event costs. This will be communicated at the start of the year.',
+      'There is no Membership fee to join the Club.',
   },
 ];
 

@@ -295,12 +295,12 @@ const EventCard = ({ data }) => {
       <Date>{data?.date}</Date>
       <Location>{data?.location}</Location>
       <Description>{data?.description}</Description>
-      <ReadMoreLink href= {`/events/${data._id}`}>
+      {/* <ReadMoreLink href= {`/events/${data._id}`}>
           Read Story
           <IconContainer>
             <ChevronRightIcon className="group-hover:opacity-0 opacity-100 translate-y-0 group-hover:translate-y-2" />
           </IconContainer>
-        </ReadMoreLink>
+        </ReadMoreLink> */}
     </CardContainer>
   );
 };

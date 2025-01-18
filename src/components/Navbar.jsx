@@ -410,14 +410,20 @@ const Navbar = () => {
         <NavItems>
           <NavLink to="/">Home</NavLink>
           <NavLink to="/events">Events</NavLink>
-          <NavLink to="/contacts">Contacts</NavLink>
           <NavLink to="/blog">Blogs</NavLink>
+          <NavLink to="/contacts">Contacts</NavLink>
         </NavItems>
 
         {isOpen && (
           <MobileMenu isOpen={isOpen}>
+            <NavLink onClick={() => setIsOpen(!isOpen)} to="/">
+              Home
+            </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/events">
               Events
+            </NavLink>
+            <NavLink onClick={() => setIsOpen(!isOpen)} to="/blog">
+              Blogs
             </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/contacts">
               Contacts

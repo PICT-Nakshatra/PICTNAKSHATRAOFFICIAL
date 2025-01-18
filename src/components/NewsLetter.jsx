@@ -59,20 +59,47 @@ const Form = styled.form`
   gap: 1rem;
 `;
 
+// const Input = styled.input`
+//   flex: 1;
+//   min-width: 0;
+//   border-radius: 0.375rem; /* Tailwind's rounded-md */
+//   border: none;
+//   background-color: rgba(255, 255, 255, 0.05);
+//   padding: 0.625rem 1rem; /* Tailwind's px-3.5 py-2 */
+//   color: #ffffff;
+//   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+//   font-size: 0.875rem; /* Tailwind's text-sm */
+//   line-height: 1.5rem; /* Tailwind's leading-6 */
+//   &:focus {
+//     outline: none;
+//     box-shadow: 0 0 0 2px #ffffff inset;
+//   }
+// `;
+
 const Input = styled.input`
   flex: 1;
-  min-width: 0;
+
   border-radius: 0.375rem; /* Tailwind's rounded-md */
   border: none;
   background-color: rgba(255, 255, 255, 0.05);
-  padding: 0.625rem 1rem; /* Tailwind's px-3.5 py-2 */
+  padding: 0.875rem 1.25rem; /* Increase padding for larger size */
   color: #ffffff;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-  font-size: 0.875rem; /* Tailwind's text-sm */
-  line-height: 1.5rem; /* Tailwind's leading-6 */
+  font-size: 1rem; /* Slightly larger font size */
+  line-height: 1.75rem; /* Adjust line height for better spacing */
+  width: 100%; /* Ensure it spans the full width */
+
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ffffff inset;
+  }
+
+  /* Make input visibly larger on mobile */
+  @media (max-width: 640px) {
+    padding: 1.25rem 1.5rem; /* Larger padding for mobile */
+    font-size: 1.125rem; /* Even larger font size */
+    line-height: 2rem; /* Adjust line height */
+    height: 3.5rem; /* Explicitly set height for consistency */
   }
 `;
 
@@ -86,6 +113,7 @@ const Button = styled.button`
   color: #1a202c; /* Tailwind's text-gray-900 */
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s;
+  cursor: pointer; /* Add this semicolon */
 
   &:hover {
     background-color: #f7fafc; /* Tailwind's bg-gray-100 */
