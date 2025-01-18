@@ -8,6 +8,7 @@ import Activities from '../components/Activities';
 import Footer from '../components/Footer';
 import { items, tabs } from '../data/constants';
 import NewsLetter from '../components/NewsLetter';
+import Calendar from '../../components/cards/calendar';
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -24,6 +25,7 @@ const Home = () => {
           <About />
           <Gallary items={items}/>
           <Activities />
+          <Calendar />
           <NewsLetter />
           <FAQ tabs = {tabs}/>
           <Footer />

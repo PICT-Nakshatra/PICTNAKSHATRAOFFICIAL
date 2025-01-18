@@ -56,7 +56,7 @@ const Nav = styled.ul`
     font-size: 12px;
   }
 `;
-const NavLink = styled.a`
+const NavLink = styled(LinkR)`
   color: ${({ theme }) => theme.text_primary};
   text-decoration: none;
   font-size: 1.2rem;
@@ -95,8 +95,8 @@ const Footer = () => {
       <FooterWrapper>
         <Logo to="/"><img src="/LOGO.png" alt="logo"/></Logo>
         <Nav>
-          <NavLink href="/events">Events</NavLink>
-          <NavLink href="/contacts">Contacts</NavLink>
+          <NavLink to="/events">Events</NavLink>
+          <NavLink to="/contacts">Contacts</NavLink>
         </Nav>
         <SocialMediaIcons>
           <SocialMediaIcon href={Bio.linkedin} target="display">

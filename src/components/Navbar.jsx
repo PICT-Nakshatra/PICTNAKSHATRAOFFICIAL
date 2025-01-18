@@ -408,6 +408,7 @@ const Navbar = () => {
         </MobileIcon>
 
         <NavItems>
+          <NavLink to="/">Home</NavLink>
           <NavLink to="/events">Events</NavLink>
           <NavLink to="/contacts">Contacts</NavLink>
           <NavLink to="/blog">Blogs</NavLink>
