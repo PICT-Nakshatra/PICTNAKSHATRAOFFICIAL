@@ -48,23 +48,22 @@ const Tabs = styled.div`
   }
 `;
 
-const GridContainer = styled.div`
+const GridContainer = styled.ul`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr; /* Single column on mobile */
+  gap: 0.5rem 1rem; /* gap-y-6 corresponds to 1.5rem (24px) in Tailwind, gap-2 corresponds to 0.5rem (8px) */
 
   @media (min-width: 640px) {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr); /* Two columns on small screens */
   }
 
   @media (min-width: 768px) {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Three columns on medium screens */
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr); /* Four columns on large screens */
   }
-
-  gap: 0.5rem 1rem; /* gap-y-6 corresponds to 1.5rem (24px) in Tailwind, gap-2 corresponds to 0.5rem (8px) */
 `;
 
 export const backendUrl = import.meta.env.VITE_BACKEND_URL;
