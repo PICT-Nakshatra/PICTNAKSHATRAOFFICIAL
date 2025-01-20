@@ -199,6 +199,8 @@
 import React from "react";
 import styled from "styled-components";
 import { ChevronRight } from 'lucide-react';
+import { Link as LinkR } from "react-router-dom";
+
 
 const CardContainer = styled.div`
   display: flex;
@@ -258,7 +260,7 @@ const Location = styled.div`
   color: ${({ theme }) => theme.text_secondary || "#888"};
 `;
 
-const ReadMoreLink = styled.a`
+const ReadMoreLink = styled(LinkR)`
   background-color: #38a169; /* Equivalent to bg-green-400 */
   width: fit-content;
   font-size: 0.9rem; /* Equivalent to text-base */ 
@@ -295,7 +297,7 @@ const EventCard = ({ data }) => {
       <Date>{data?.date}</Date>
       <Location>{data?.location}</Location>
       <Description>{data?.description}</Description>
-      <ReadMoreLink href= {`/events/${data._id}`}>
+      <ReadMoreLink to= {`/events/${data._id}`}>
           Read Story
           <IconContainer>
             <ChevronRightIcon className="group-hover:opacity-0 opacity-100 translate-y-0 group-hover:translate-y-2" />

@@ -128,7 +128,7 @@ export const teamData = [
     desc: "AI-ML Expert and Technical lead",
   }, 
    {
-    name: "Shravan Updahyay",
+    name: "Shravan Upadhye",
     title: "Co-Founder",
     image: "/PHOTO-2025-01-18-22-20-34.jpg",
     links: 'https://www.linkedin.com/in/shravan-upadhye-140610296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',

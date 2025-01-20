@@ -2,6 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ChevronRight } from 'lucide-react';
+import { Link as LinkR } from "react-router-dom";
 
 const CardContainer = styled.div`
   display: flex;
@@ -62,7 +63,7 @@ const Location = styled.div`
 `;
 
 
-const ReadMoreLink = styled.a`
+const ReadMoreLink = styled(LinkR)`
   background-color: #38a169; /* Equivalent to bg-green-400 */
   width: fit-content;
   font-size: 0.9rem; /* Equivalent to text-base */ 
@@ -97,7 +98,7 @@ const BlogCard = ({ data }) => {
       <Title>{data?.title}</Title>
       <Location>{data?.author}</Location>
       <Description>{data?.content}</Description>
-      <ReadMoreLink href= {`/blog/${data._id}`}>
+      <ReadMoreLink to = {`/blog/${data._id}`}>
           Read Story
           <IconContainer>
             <ChevronRightIcon className="group-hover:opacity-0 opacity-100 translate-y-0 group-hover:translate-y-2" />
