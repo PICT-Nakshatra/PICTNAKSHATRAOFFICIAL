@@ -18,10 +18,20 @@ const CarouselWrapper = styled(motion.div)`
   }
 `;
 
+
+
 const CarouselItem = styled(motion.div)`
-  min-width: 20rem;
-  min-height: 25rem;
+  min-width: 42rem;
+  height: 30rem; /* Fixed height for consistency */
   padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
+  display: flex; /* Use flex to center the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+
+  @media (max-width: 768px) {
+    min-width: 28rem; /* Adjust for smaller screens */
+    height: 25rem; /* Adjust for smaller screens */
+  }
 `;
 
 const CarouselImage = styled.img`

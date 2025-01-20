@@ -96,6 +96,8 @@ const Footer = () => {
         <Logo to="/"><img src="/LOGO.png" alt="logo"/></Logo>
         <Nav>
           <NavLink to="/events">Events</NavLink>
+          <NavLink to="/blog">Blogs</NavLink>
+          <NavLink to="/calender">Calender</NavLink>
           <NavLink to="/contacts">Contacts</NavLink>
         </Nav>
         <SocialMediaIcons>

@@ -217,9 +217,8 @@ const CardContainer = styled.div`
   }
 
   @media only screen and (max-width: 768px) {
-    padding: 12px;
-    height: 180px;
-    width: 180px;
+    padding: 15px;
+    width: 300px;
   }
 `;
 
@@ -262,15 +261,16 @@ const Location = styled.div`
 const ReadMoreLink = styled.a`
   background-color: #38a169; /* Equivalent to bg-green-400 */
   width: fit-content;
-  font-size: 1rem; /* Equivalent to text-base */ 
+  font-size: 0.9rem; /* Equivalent to text-base */ 
   border-radius: 0.375rem; /* Equivalent to rounded-md */
   font-weight: normal;
-  padding: 0.5rem;
+  padding: 0.3rem;
   display: flex;
   justify-content: center;
   transition: all 0.3s;
   align-items: center;
   margin-top: auto;
+  
 
   &:hover {
     background-color: #2f855a; /* Darker green on hover */
@@ -295,12 +295,12 @@ const EventCard = ({ data }) => {
       <Date>{data?.date}</Date>
       <Location>{data?.location}</Location>
       <Description>{data?.description}</Description>
-      {/* <ReadMoreLink href= {`/events/${data._id}`}>
+      <ReadMoreLink href= {`/events/${data._id}`}>
           Read Story
           <IconContainer>
             <ChevronRightIcon className="group-hover:opacity-0 opacity-100 translate-y-0 group-hover:translate-y-2" />
           </IconContainer>
-        </ReadMoreLink> */}
+        </ReadMoreLink>
     </CardContainer>
   );
 };

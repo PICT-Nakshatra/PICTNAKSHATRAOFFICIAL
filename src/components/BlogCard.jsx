@@ -1,6 +1,7 @@
 
 import React from "react";
 import styled from "styled-components";
+import { ChevronRight } from 'lucide-react';
 
 const CardContainer = styled.div`
   display: flex;
@@ -60,12 +61,48 @@ const Location = styled.div`
   color: ${({ theme }) => theme.text_secondary || "#888"};
 `;
 
+
+const ReadMoreLink = styled.a`
+  background-color: #38a169; /* Equivalent to bg-green-400 */
+  width: fit-content;
+  font-size: 0.9rem; /* Equivalent to text-base */ 
+  border-radius: 0.375rem; /* Equivalent to rounded-md */
+  font-weight: normal;
+  padding: 0.3rem;
+  display: flex;
+  justify-content: center;
+  transition: all 0.3s;
+  align-items: center;
+  margin-top: auto;
+
+  &:hover {
+    background-color: #2f855a; /* Darker green on hover */
+  }
+`;
+
+const IconContainer = styled.span`
+  position: relative;
+`;
+
+const ChevronRightIcon = styled(ChevronRight)`
+  transition: all 0.3s;
+  justify-content : center;
+  display : flex;
+  align-item: center;
+`;
+
 const BlogCard = ({ data }) => {
   return (
     <CardContainer>
       <Title>{data?.title}</Title>
       <Location>{data?.author}</Location>
       <Description>{data?.content}</Description>
+      <ReadMoreLink href= {`/blog/${data._id}`}>
+          Read Story
+          <IconContainer>
+            <ChevronRightIcon className="group-hover:opacity-0 opacity-100 translate-y-0 group-hover:translate-y-2" />
+          </IconContainer>
+        </ReadMoreLink>
     </CardContainer>
   );
 };

@@ -10,7 +10,7 @@ const tabs = [
     description:
       'Dive into the wonders of the universe through stargazing sessions, astrophotography, and visits to renowned astronomy-related destinations. From observing celestial alignments to capturing the beauty of distant galaxies, experience the cosmos like never before',
     imageUrl:
-      '/galaxy.jpg',
+      '/wallpaperflare.com_wallpaper (1).jpg',
   },
   {
     title: 'Engage in Hands-On Learning.',
@@ -18,7 +18,7 @@ const tabs = [
     description:
       'Participate in interactive workshops, rocketry design challenges, tech-focused sessions, and exciting astronomy exhibitions. Expand your horizons with guest lectures and discussions led by experts in astronomy and space science.',
     imageUrl:
-      '/Tele1.png',
+      'download (1).jpg',
   },
   {
     title: 'Compete, Collaborate, and Connect',
@@ -26,7 +26,7 @@ const tabs = [
     description:
       'Join thrilling competitions like hackathons and rocketry challenges while building a vibrant community of astronomy enthusiasts. Foster friendships, share knowledge, and collaborate with like-minded individuals as we explore the mysteries of space together.',
     imageUrl:
-      'https://images.unsplash.com/photo-1693581176773-a5f2362209e6?q=80&w=1200&auto=format',
+      '/2c9d31c2f013a2af59f9ddbeaf54cc36.jpg',
   },
 ];
 
@@ -123,7 +123,7 @@ const ImageContainer = styled(motion.div)`
   align-items: center;
   overflow: hidden;
   padding: 1rem;
-  max-height: 400px; /* Restrict the height */
+  max-height: 410px;
 `;
 
 const StyledImage = styled(motion.img)`
