@@ -411,7 +411,7 @@ const Navbar = () => {
           <NavLink to="/">Home</NavLink>
           <NavLink to="/events">Events</NavLink>
           <NavLink to="/blog">Blogs</NavLink>
-          <NavLink to="/calender">Calender</NavLink>
+          <NavLink to="/calender">Calendar</NavLink>
           <NavLink to="/contacts">Contacts</NavLink>
         </NavItems>
 
@@ -427,7 +427,7 @@ const Navbar = () => {
               Blogs
             </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/calender">
-              Calender
+              Calendar
             </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/contacts">
               Contacts
@@ -440,7 +440,7 @@ const Navbar = () => {
                 onClick={() => setIsOpen(!isOpen)}
                 to="/login"
               >
-                Log In/Sign Up
+                Login
               </AuthButton>
             )}
           </MobileMenu>
