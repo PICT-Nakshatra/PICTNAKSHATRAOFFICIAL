@@ -450,7 +450,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
           ) : (
-            <AuthButton to="/login">Log In/Sign Up</AuthButton>
+            <AuthButton to="/login">Login</AuthButton>
           )}
         </ButtonContainer>
       </NavbarContainer>
