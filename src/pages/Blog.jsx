@@ -80,6 +80,17 @@ const Title = styled.div`
     font-size: 32px;
   }
 `;
+const Title1 = styled.div`
+  font-size: 44px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 200px;
+  color: ${({ theme }) => theme.text_primary};
+  @media (max-width: 768px) {
+    margin-top: 12px;
+    font-size: 32px;
+  }
+`;
 
 const GridContainer = styled.ul`
   display: grid;
@@ -116,13 +127,14 @@ const Blog = () => {
   return (
     <Body>
       <Title>Blogs</Title>
-      <GridContainer>
+      {data.length == 0 ? (<Title1>Coming Soon...</Title1>) : <GridContainer>
         {data.map((blog) => (
           <li key={blog.id}>
             <BlogCard data={blog} />
           </li>
         ))}
-      </GridContainer>
+      </GridContainer>}
+      
     </Body>
   );
 };
