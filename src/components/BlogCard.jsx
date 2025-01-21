@@ -75,6 +75,8 @@ const ReadMoreLink = styled(LinkR)`
   transition: all 0.3s;
   align-items: center;
   margin-top: auto;
+  color: black;
+  text-decoration: none;
 
   &:hover {
     background-color: #2f855a; /* Darker green on hover */

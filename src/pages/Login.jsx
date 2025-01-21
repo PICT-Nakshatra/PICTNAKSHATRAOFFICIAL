@@ -223,7 +223,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import * as THREE from "three";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import RINGS from "vanta/dist/vanta.rings.min"; // Import the specific Vanta effect
 
@@ -421,6 +421,7 @@ const Login = () => {
 
   return (
     <Body>
+      <ToastContainer />
       <VantaBackground id="vanta-background" />
       <Wrapper>
         <Title>{currentState}</Title>
