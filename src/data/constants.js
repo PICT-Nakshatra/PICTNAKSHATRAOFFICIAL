@@ -139,7 +139,7 @@ export const teamData = [
     title: "Co-Founder",
     image: "/PHOTO-2025-01-18-21-55-49.jpg",
     links: 'https://www.linkedin.com/in/dhanashree-sunil-sonawane-1a65b62b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-    desc: "Lead of Event management ",
+    desc: "Lead of Designing",
   },  
   {
     name: "Piyusha kulkarni",
