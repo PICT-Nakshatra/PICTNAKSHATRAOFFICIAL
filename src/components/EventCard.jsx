@@ -261,7 +261,7 @@ const Location = styled.div`
 `;
 
 const ReadMoreLink = styled(LinkR)`
-  background-color: #38a169; /* Equivalent to bg-green-400 */
+  background-color: #38a169; 
   width: fit-content;
   font-size: 0.9rem; /* Equivalent to text-base */ 
   border-radius: 0.375rem; /* Equivalent to rounded-md */
@@ -272,6 +272,8 @@ const ReadMoreLink = styled(LinkR)`
   transition: all 0.3s;
   align-items: center;
   margin-top: auto;
+  text-decoration : none;
+  color : black;
   
 
   &:hover {
