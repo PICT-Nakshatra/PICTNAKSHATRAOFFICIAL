@@ -118,14 +118,14 @@ export const teamData = [
     title: "Founder",
     image: "/PHOTO-2025-01-18-22-14-01.jpg",
     links: 'https://www.linkedin.com/in/pranav-pandge-75a34b30a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-    desc: "Rocket design Expert and Lead of Designing",
+    desc: "Lead of Designing",
   }, 
   {
     name: "Pranav Kodlinge",
     title: "Co-Founder",
     image: "/PHOTO-2025-01-20-23-43-13.jpg",
     links: 'https://www.linkedin.com/in/pranav-kodlinge/',
-    desc: "AI-ML Expert and Technical lead",
+    desc: "Technical lead",
   }, 
    {
     name: "Shravan Upadhye",
@@ -139,7 +139,7 @@ export const teamData = [
     title: "Co-Founder",
     image: "/PHOTO-2025-01-18-21-55-49.jpg",
     links: 'https://www.linkedin.com/in/dhanashree-sunil-sonawane-1a65b62b4?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-    desc: "Rocket design Expert and event manager",
+    desc: "Lead of Event management ",
   },  
   {
     name: "Piyusha kulkarni",
@@ -167,7 +167,7 @@ export const teamData = [
     title: "Founding Member",
     image: "/PHOTO-2025-01-18-22-14-46.jpg",
     links: 'https://www.linkedin.com/in/chaitanya-shingate-3081952a7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app',
-    desc: "Avionics Expert and Lead of Avionics",
+    desc: "Lead of Avionics",
   },   
 ];
 
