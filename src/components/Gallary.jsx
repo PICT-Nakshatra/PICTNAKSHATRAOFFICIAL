@@ -1,102 +1,157 @@
-'use client';
-import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import React from 'react';
 import styled from 'styled-components';
 
-// Styled components
-const CarouselContainer = styled.div`
-  width: 100%;
-  overflow: hidden;
+const GalleryContainer = styled.div`
   margin-top: 50px;
-`;
-
-const CarouselWrapper = styled(motion.div)`
-  display: flex;
-  cursor: grab;
-  &:active {
-    cursor: grabbing;
+  padding: 0 1rem;
+  
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+  
+  * {
+    font-family: 'Poppins', sans-serif;
   }
 `;
 
-
-
-const CarouselItem = styled(motion.div)`
-  min-width: 42rem;
-  height: 30rem; /* Fixed height for consistency */
-  padding: 0.5rem; /* Equivalent to p-2 in Tailwind */
-  display: flex; /* Use flex to center the image */
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-
-  @media (max-width: 768px) {
-    min-width: 28rem; /* Adjust for smaller screens */
-    height: 25rem; /* Adjust for smaller screens */
-  }
-`;
-
-const CarouselImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0.5rem; /* Equivalent to rounded-md in Tailwind */
-  pointer-events: none;
-`;
-
-const Title = styled.div`
-  font-weight: 700;
-  font-size: 40px;
+const Title = styled.h1`
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 auto;
   color: ${({ theme }) => theme.text_primary};
-  line-height: 68px;
-    text-align: center;
-    margin-bottom: 40px;
+`;
 
-  @media (max-width: 960px) {
-    text-align: center;
-  }
+const Subtitle = styled.p`
+  font-size: 0.875rem;
+  color: #64748b;
+  text-align: center;
+  margin: 0.5rem auto 0;
+  max-width: 32rem;
+`;
 
-  @media (max-width: 960px) {
-    font-size: 40px;
-    line-height: 48px;
-    margin-bottom: 8px;
+const GalleryGrid = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: 400px;
+  width: 100%;
+  max-width: 64rem;
+  margin: 2.5rem auto 0;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    height: auto;
+    gap: 1rem;
   }
 `;
 
-function Carousel({ items }) {
-  const [width, setWidth] = useState(0);
-  const carouselRef = useRef(null);
-
-  useEffect(() => {
-    if (carouselRef.current) {
-      setWidth(carouselRef.current.scrollWidth - carouselRef.current.offsetWidth);
+const GalleryItem = styled.div`
+  position: relative;
+  flex-grow: 1;
+  transition: all 0.5s ease;
+  width: 14rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  height: 400px;
+  cursor: pointer;
+  
+  &:hover {
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 300px;
+    
+    &:hover {
+      width: 100%;
     }
-  }, []);
+  }
+`;
+
+const GalleryImage = styled.img`
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+  
+  ${GalleryItem}:hover & {
+    transform: scale(1.05);
+  }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  color: white;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  
+  ${GalleryItem}:hover & {
+    opacity: 1;
+  }
+`;
+
+const ImageTitle = styled.h3`
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+`;
+
+const ImageDescription = styled.p`
+  font-size: 0.875rem;
+  margin: 0;
+  opacity: 0.9;
+`;
+
+function ExpandingGallery({ items }) {
+  // Use the first 6 items from the gallery data
+  const galleryItems = items.slice(0, 6).map((item, index) => ({
+    ...item,
+    title: [
+      "Stargazing Session",
+      "Astrophotography Workshop", 
+      "Rocketry Challenge",
+      "Telescope Assembly",
+      "Planetarium Visit",
+      "Astronomy Exhibition"
+    ][index] || `Gallery Item ${index + 1}`,
+    description: [
+      "Exploring the night sky with our community",
+      "Capturing the beauty of distant galaxies",
+      "Building and launching model rockets",
+      "Learning telescope mechanics and optics",
+      "Immersive journey through the cosmos",
+      "Showcasing astronomical discoveries"
+    ][index] || "A glimpse into our astronomy activities"
+  }));
 
   return (
-    <>
-    <Title>
-        Gallery
-    </Title>
-    <CarouselContainer>
-      <CarouselWrapper
-        ref={carouselRef}
-        drag="x"
-        whileDrag={{ scale: 0.95 }}
-        dragElastic={0.2}
-        dragConstraints={{ right: 0, left: -width }}
-        dragTransition={{ bounceDamping: 30 }}
-      >
-        {items.slice(0, 8).map((item, index) => (
-          <CarouselItem key={index}>
-            <CarouselImage
+    <GalleryContainer>
+      <Title>Our Latest Creations</Title>
+      <Subtitle>
+        A visual collection of our most recent works - each piece crafted with intention, emotion, and style.
+      </Subtitle>
+      <GalleryGrid>
+        {galleryItems.map((item, index) => (
+          <GalleryItem key={index}>
+            <GalleryImage
               src={item.url}
-              alt={`Carousel Item ${index + 1}`}
+              alt={item.title}
             />
-          </CarouselItem>
+            <Overlay>
+              <ImageTitle>{item.title}</ImageTitle>
+              <ImageDescription>{item.description}</ImageDescription>
+            </Overlay>
+          </GalleryItem>
         ))}
-      </CarouselWrapper>
-    </CarouselContainer>
-    </>
+      </GalleryGrid>
+    </GalleryContainer>
   );
 }
 
-export default Carousel;
+export default ExpandingGallery;

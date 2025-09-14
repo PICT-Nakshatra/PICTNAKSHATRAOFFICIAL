@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-// import { Canvas } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { Bio } from "../data/constants";
-// import { Suspense } from 'react'
+import { Suspense } from 'react'
 import Typewriter from "typewriter-effect";
 import { Tilt } from "react-tilt";
 import { motion } from "framer-motion";
@@ -12,6 +12,7 @@ import {
   headTextAnimation,
 } from "../utils/motion";
 import StarCanvas from "../components/canvas/Stars.jsx";
+import Rocket from "./Rocket.jsx";
 
 const HeroContainer = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const HeroLeftContainer = styled.div`
   width: 100%;
   order: 1;
   @media (max-width: 960px) {
-    order: 2;
+    order: 1;
     margin-bottom: 30px;
     display: flex;
     gap: 6px;
@@ -60,11 +61,11 @@ const HeroRightContainer = styled.div`
   display: flex;
   justify-content: end;
   @media (max-width: 960px) {
-    order: 1;
+    order: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-contents: center;
+    justify-content: center;
     margin-bottom: 80px;
   }
 
@@ -122,6 +123,9 @@ const SubTitle = styled.div`
 
   @media (max-width: 960px) {
     text-align: center;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   @media (max-width: 960px) {
@@ -173,7 +177,12 @@ const Button = styled.a`
     @media (max-width: 640px) {
         padding: 12px 0;
         font-size: 18px;
-    } 
+    }
+    
+    @media (max-width: 960px) {
+        display: none;
+    }
+    
     color: white;
 `;
 
@@ -242,14 +251,22 @@ const Hero = () => {
             <HeroRightContainer>
               <motion.div {...headContentAnimation}>
                 <Tilt>
-                  {/* <Canvas className='w-full h-screen bg-transparent' camera ={{near: 0.1 , far: 1000}}>
-                        
-                        <directionalLight position = {[1,1,1]} intensity={2}/>
-                        <ambientLight intensity={0.5}/>
-                        <hemisphereLight skyColor = "#b1e1ff" groundColor="#000000" intensity={1}/>
-                        
-                       
-                    </Canvas> */}
+                  <Canvas 
+                    className='w-full h-full bg-transparent' 
+                    camera={{ near: 0.1, far: 1000, position: [0, 0, 5] }}
+                    style={{ width: '500px', height: '600px' }}
+                  >
+                    <Suspense fallback={null}>
+                      <directionalLight position={[1, 1, 1]} intensity={2} />
+                      <ambientLight intensity={0.5} />
+                      <hemisphereLight skyColor="#b1e1ff" groundColor="#000000" intensity={1} />
+                        <Rocket 
+                          position={[2, -2, -3]} 
+                          scale={[1,1,1]} 
+                          rotation={[0, Math.PI / 4, 0]} 
+                        />
+                    </Suspense>
+                  </Canvas>
                 </Tilt>
               </motion.div>
             </HeroRightContainer>

@@ -61,8 +61,13 @@ import styled from "styled-components";
 const StyledCanvasWrapper = styled.div`
   width: 100%;
   height: 100vh;
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  margin: 0;
+  padding: 0;
 `;
 
 const Stars = (props) => {
@@ -122,7 +127,15 @@ const Planet = ({ orbitRadius, orbitSpeed, rotationSpeed, color, size, isMoon })
 const StyledStarsCanvas = () => {
   return (
     <StyledCanvasWrapper>
-      <Canvas camera={{ position: [0, 0, 2] }} style={{ backgroundColor: "black" }}>
+      <Canvas 
+        camera={{ position: [0, 0, 2] }} 
+        style={{ 
+          backgroundColor: "black", 
+          width: "100%", 
+          height: "100%",
+          display: "block"
+        }}
+      >
         <Suspense fallback={null}>
 
           <ambientLight intensity={1} />

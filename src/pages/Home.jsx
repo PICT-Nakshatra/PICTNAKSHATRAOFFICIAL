@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import Hero from '../components/Hero';
-import About from '../components/About';
+import BentoAbout from '../components/BentoAbout';
 import FAQ from '../components/FAQ'
 import Gallary from '../components/Gallary'
 import Activities from '../components/Activities';
@@ -21,7 +21,7 @@ const Home = () => {
     <>
     <Body>
           <Hero />
-          <About />
+          <BentoAbout />
           <Gallary items={items}/>
           <Activities />
           <NewsLetter />
