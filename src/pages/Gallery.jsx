@@ -33,7 +33,6 @@ const GalleryGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
   padding: 1rem;
-  background-color: ${({ theme }) => theme.bg};
 `;
 
 const GalleryItem = styled(motion.div)`
@@ -42,8 +41,8 @@ const GalleryItem = styled(motion.div)`
   overflow: hidden;
   cursor: pointer;
   aspect-ratio: 1;
-  background-color: ${({ theme }) => theme.bg};
-  border: none;
+  background-color: ${({ theme }) => theme.card};
+  border: 1px solid ${({ theme }) => theme.primary + 20};
   transition: all 0.3s ease;
 
   &:hover {
@@ -72,8 +71,8 @@ const Overlay = styled(motion.div)`
   background: linear-gradient(
     to bottom,
     transparent 0%,
-    transparent 60%,
-    rgba(0, 0, 0, 0.8) 100%
+    transparent 50%,
+    rgba(0, 0, 0, 0.7) 100%
   );
   display: flex;
   align-items: flex-end;

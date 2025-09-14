@@ -59,6 +59,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BlogCard from "../components/BlogCard";
+import StarsBackground from "../components/StarsBackground";
 
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -125,17 +126,19 @@ const Blog = () => {
   console.log(data);
 
   return (
-    <Body>
-      <Title>Blogs</Title>
-      {data.length == 0 ? (<Title1>Coming Soon...</Title1>) : <GridContainer>
-        {data.map((blog) => (
-          <li key={blog.id}>
-            <BlogCard data={blog} />
-          </li>
-        ))}
-      </GridContainer>}
-      
-    </Body>
+    <StarsBackground >
+      <Body>
+        <Title>Blogs</Title>
+        {data.length == 0 ? (<Title1>Coming Soon...</Title1>) : <GridContainer>
+          {data.map((blog) => (
+            <li key={blog.id}>
+              <BlogCard data={blog} />
+            </li>
+          ))}
+        </GridContainer>}
+        
+      </Body>
+    </StarsBackground>
   );
 };
 
