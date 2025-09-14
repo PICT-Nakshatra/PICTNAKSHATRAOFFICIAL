@@ -9,7 +9,6 @@ const GalleryContainer = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding: 2rem 1rem;
   color: ${({ theme }) => theme.text_primary};
-  margin-top: 50px;
 `;
 
 const Title = styled.div`
@@ -250,9 +249,9 @@ const Gallery = () => {
             transition={{ delay: index * 0.1 }}
           >
             <GalleryImage src={item.url} alt={`Gallery image ${index + 1}`} />
-            <Overlay>
+            {/* <Overlay>
               <ImageNumber>{index + 1}</ImageNumber>
-            </Overlay>
+            </Overlay> */}
           </GalleryItem>
         ))}
       </GalleryGrid>
