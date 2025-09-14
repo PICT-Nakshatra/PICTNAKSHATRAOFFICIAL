@@ -244,9 +244,7 @@ const Hero = () => {
                 <SubTitle>{Bio.description}</SubTitle>
               </motion.div>
 
-              <Button href={Bio.linkedin} target="_blank">
-                LinkedIn
-              </Button>
+             
             </HeroLeftContainer>
             <HeroRightContainer>
               <motion.div {...headContentAnimation}>
