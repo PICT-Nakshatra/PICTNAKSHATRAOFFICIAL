@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import EventCard from "../components/EventCard";
 import StarsBackground from "../components/StarsBackground";
+import Lottie from "lottie-react";
+import rocketLoader from "../assets/Rocket_Loader.json";
 
 const Body = styled.div`
   width: 100%;
@@ -46,6 +48,36 @@ const SectionContainer = styled.div`
   }
 `;
 
+const LoaderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  gap: 1rem;
+`;
+
+const LoaderText = styled.div`
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
+
+const RocketLoader = styled.div`
+  width: 200px;
+  height: 200px;
+  
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+  }
+`;
+
 const GridContainer = styled.ul`
   display: grid;
   grid-template-columns: 1fr; /* Single column on mobile */
@@ -74,6 +106,7 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Event = () => {
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch(backendUrl + "/api/events/")
@@ -85,7 +118,8 @@ const Event = () => {
           console.error("Unexpected response:", response);
         }
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => console.error("Error fetching data:", error))
+      .finally(() => setLoading(false));
   }, []);
   console.log(data);
 
@@ -93,6 +127,22 @@ const Event = () => {
   const upcomingEvents = data.filter((event) => event.state === "upcoming").slice(0, 6);
   const ongoingEvents = data.filter((event) => event.state === "ongoing").slice(0, 6);
   const completedEvents = data.filter((event) => event.state === "completed").slice(0, 6);
+
+  if (loading) {
+    return (
+      <StarsBackground>
+        <Body>
+          <Title>Events</Title>
+          <LoaderContainer>
+            <RocketLoader>
+              <Lottie animationData={rocketLoader} loop={true} />
+            </RocketLoader>
+            <LoaderText>Loading Events...</LoaderText>
+          </LoaderContainer>
+        </Body>
+      </StarsBackground>
+    );
+  }
 
   return (
     <StarsBackground>
