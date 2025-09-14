@@ -61,7 +61,6 @@ import styled from "styled-components";
 import BlogCard from "../components/BlogCard";
 import StarsBackground from "../components/StarsBackground";
 import Lottie from "lottie-react";
-import rocketLoader from "../assets/Rocket_Loader.json";
 
 const Body = styled.div`
   width: 100%;
@@ -164,8 +163,16 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const Blog = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rocketAnimation, setRocketAnimation] = useState(null);
   
   useEffect(() => {
+    // Load rocket animation
+    fetch("/Rocket_Loader.json")
+      .then(response => response.json())
+      .then(data => setRocketAnimation(data))
+      .catch(error => console.error("Error loading rocket animation:", error));
+
+    // Load blogs data
     fetch(backendUrl + '/api/blogs/')
       .then(res => res.json())
       .then(data => setData(data))
@@ -182,7 +189,7 @@ const Blog = () => {
           <Title>Blogs</Title>
           <LoaderContainer>
             <RocketLoader>
-              <Lottie animationData={rocketLoader} loop={true} />
+              {rocketAnimation && <Lottie animationData={rocketAnimation} loop={true} />}
             </RocketLoader>
             <LoaderText>Loading Blogs...</LoaderText>
           </LoaderContainer>

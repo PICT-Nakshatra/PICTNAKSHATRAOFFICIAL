@@ -3,7 +3,6 @@ import styled from "styled-components";
 import EventCard from "../components/EventCard";
 import StarsBackground from "../components/StarsBackground";
 import Lottie from "lottie-react";
-import rocketLoader from "../assets/Rocket_Loader.json";
 
 const Body = styled.div`
   width: 100%;
@@ -107,8 +106,16 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 const Event = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [rocketAnimation, setRocketAnimation] = useState(null);
 
   useEffect(() => {
+    // Load rocket animation
+    fetch("/Rocket_Loader.json")
+      .then(response => response.json())
+      .then(data => setRocketAnimation(data))
+      .catch(error => console.error("Error loading rocket animation:", error));
+
+    // Load events data
     fetch(backendUrl + "/api/events/")
       .then((res) => res.json())
       .then((response) => {
@@ -135,7 +142,7 @@ const Event = () => {
           <Title>Events</Title>
           <LoaderContainer>
             <RocketLoader>
-              <Lottie animationData={rocketLoader} loop={true} />
+              {rocketAnimation && <Lottie animationData={rocketAnimation} loop={true} />}
             </RocketLoader>
             <LoaderText>Loading Events...</LoaderText>
           </LoaderContainer>
