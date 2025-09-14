@@ -28,13 +28,26 @@ export const AuthProvider = ({ children }) => {
               Authorization: `Bearer ${storedToken}`
             }
           });
-          setUser(response.data.user);
-          setToken(storedToken);
+          
+          if (response.data.user) {
+            setUser(response.data.user);
+            setToken(storedToken);
+          } else {
+            // Invalid response, clear auth
+            localStorage.removeItem('token');
+            setToken(null);
+            setUser(null);
+          }
         } catch (error) {
           console.error('Auth check failed:', error);
           localStorage.removeItem('token');
           setToken(null);
+          setUser(null);
         }
+      } else {
+        // No token, ensure user is null
+        setUser(null);
+        setToken(null);
       }
       setLoading(false);
     };
@@ -125,8 +138,16 @@ export const AuthProvider = ({ children }) => {
     logout,
     setUser,
     setToken,
-    isAuthenticated: !!token
+    isAuthenticated: !!token && !!user
   };
+
+  // Debug logging
+  console.log('AuthContext state:', { 
+    user: !!user, 
+    token: !!token, 
+    loading, 
+    isAuthenticated: !!token && !!user 
+  });
 
   return (
     <AuthContext.Provider value={value}>
