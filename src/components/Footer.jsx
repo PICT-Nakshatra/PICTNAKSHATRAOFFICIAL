@@ -104,6 +104,9 @@ const Footer = () => {
           <SocialMediaIcon href={Bio.linkedin} target="display">
             <LinkedIn />
           </SocialMediaIcon>
+          <SocialMediaIcon href={Bio.instagram} target="display">
+            <Instagram />
+          </SocialMediaIcon>
         </SocialMediaIcons>
         <Copyright>&copy; 2025 Pict Nakshatra. All rights reserved.</Copyright>
       </FooterWrapper>

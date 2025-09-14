@@ -1,15 +1,17 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { FiArrowRight, FiMail, FiMapPin, FiStar, FiUsers, FiZap, FiTarget } from "react-icons/fi";
-import { SiGithub, SiLinkedin, SiInstagram, SiYoutube } from "react-icons/si";
+import { FiArrowRight, FiMail, FiMapPin, FiUsers, FiZap, FiTarget } from "react-icons/fi";
+import { SiLinkedin, SiInstagram, SiYoutube } from "react-icons/si";
+import { FaRocket, FaImages } from "react-icons/fa";
 
 const BentoContainer = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.bg};
   padding: 2rem 1rem;
   color: ${({ theme }) => theme.text_primary};
-  margin-top: 50px;
+  margin-top: 0;
+  padding-top: 6rem;
 `;
 
 const Title = styled.div`
@@ -130,6 +132,35 @@ const SocialIcon = styled.div`
   color: white;
 `;
 
+const ComingSoonOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+  z-index: 10;
+  cursor: not-allowed;
+`;
+
+const SocialBlockContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
 const ContactButton = styled.a`
   display: flex;
   align-items: center;
@@ -227,7 +258,7 @@ export const BentoAbout = () => {
           }}
         >
           <Logo>
-            <FiStar />
+            <FaRocket />
           </Logo>
           <h1 style={{ fontSize: "2.5rem", fontWeight: "600", marginBottom: "1rem", textAlign: "center" }}>
             Welcome to PICT Nakshatra
@@ -235,7 +266,7 @@ export const BentoAbout = () => {
           <p style={{ fontSize: "1.2rem", color: "#888", textAlign: "center", maxWidth: "600px" }}>
             The Astronomy Club of PICT. We are a community of astronomy enthusiasts dedicated to exploring the wonders of the universe.
           </p>
-          <ContactButton href="#contact" style={{ marginTop: "1rem" }}>
+          <ContactButton href="/contacts" style={{ marginTop: "1rem" }}>
             Join Our Community <FiArrowRight />
           </ContactButton>
         </HeaderBlock>
@@ -245,14 +276,17 @@ export const BentoAbout = () => {
             rotate: "2.5deg",
             scale: 1.1,
           }}
-          style={{ backgroundColor: "#ff0000" }}
+          style={{ backgroundColor: "#ff0000", cursor: "not-allowed" }}
         >
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <SocialBlockContainer>
             <SocialIcon>
               <SiYoutube />
             </SocialIcon>
-            <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.9rem" }}>YouTube</p>
-          </a>
+            <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.9rem", color: "white" }}>YouTube</p>
+            <ComingSoonOverlay>
+              Coming Soon
+            </ComingSoonOverlay>
+          </SocialBlockContainer>
         </SocialBlock>
 
         <SocialBlock
@@ -260,13 +294,13 @@ export const BentoAbout = () => {
             rotate: "-2.5deg",
             scale: 1.1,
           }}
-          style={{ backgroundColor: "#333" }}
+          style={{ backgroundColor: "#8B5CF6" }}
         >
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <a href="/gallery" style={{ color: "white", textDecoration: "none" }}>
             <SocialIcon>
-              <SiGithub />
+              <FaImages />
             </SocialIcon>
-            <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.9rem" }}>GitHub</p>
+            <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.9rem" }}>Gallery</p>
           </a>
         </SocialBlock>
 
@@ -277,7 +311,7 @@ export const BentoAbout = () => {
           }}
           style={{ backgroundColor: "#E4405F" }}
         >
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <a href="https://www.instagram.com/pict.nakshatra/" style={{ color: "white", textDecoration: "none" }}>
             <SocialIcon>
               <SiInstagram />
             </SocialIcon>
@@ -292,7 +326,7 @@ export const BentoAbout = () => {
           }}
           style={{ backgroundColor: "#0077B5" }}
         >
-          <a href="#" style={{ color: "white", textDecoration: "none" }}>
+          <a href="https://www.linkedin.com/company/pict-nakshatra/" style={{ color: "white", textDecoration: "none" }}>
             <SocialIcon>
               <SiLinkedin />
             </SocialIcon>

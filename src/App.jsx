@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify'
 import Calender from './pages/Calender'
 import BlogDetailsPage from './pages/BlogDetailPage'
 import AuthCallback from './pages/AuthCallback'
+import Gallery from './pages/Gallery'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import 'react-toastify/dist/ReactToastify.css'
@@ -47,6 +48,7 @@ function App() {
               </ProtectedRoute>
             } />
             <Route path="/contacts" element={<Contacts />} />
+            <Route path="/gallery" element={<Gallery />} />
             <Route path="/blog" element={
               <ProtectedRoute>
                 <Blog/>

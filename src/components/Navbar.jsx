@@ -405,6 +405,7 @@ const Navbar = () => {
           <NavLink to="/">Home</NavLink>
           <NavLink to="/events">Events</NavLink>
           <NavLink to="/blog">Blogs</NavLink>
+          <NavLink to="/gallery">Gallery</NavLink>
           <NavLink to="/calender">Calendar</NavLink>
           <NavLink to="/contacts">Contacts</NavLink>
         </NavItems>
@@ -419,6 +420,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/blog">
               Blogs
+            </NavLink>
+            <NavLink onClick={() => setIsOpen(!isOpen)} to="/gallery">
+              Gallery
             </NavLink>
             <NavLink onClick={() => setIsOpen(!isOpen)} to="/calender">
               Calendar
