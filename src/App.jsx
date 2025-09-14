@@ -11,6 +11,9 @@ import EventDetailsPage from './pages/EventDetailPage'
 import { ToastContainer } from 'react-toastify'
 import Calender from './pages/Calender'
 import BlogDetailsPage from './pages/BlogDetailPage'
+import { AuthProvider } from './contexts/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import 'react-toastify/dist/ReactToastify.css'
 
 
 
@@ -19,20 +22,52 @@ function App() {
   return (
     <>
      <ThemeProvider theme={darkTheme}>
-      <ToastContainer />
-      <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path='/' element = {<Home />} />
-          <Route path="/events" element={<Event />} />
-          <Route path="/contacts" element={<Contacts />} />
-          <Route path="/blog" element={<Blog/>} />
-          <Route path="/Login" element={<Login/>} />
-          <Route path="/events/:id" element={<EventDetailsPage/>} />
-          <Route path="/blog/:id" element={<BlogDetailsPage/>} />
-          <Route path="/calender" element={<Calender/>} />
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <BrowserRouter>
+          <Navbar />
+          <Routes>
+            <Route path='/' element = {<Home />} />
+            <Route path="/login" element={<Login/>} />
+            <Route path="/events" element={
+              <ProtectedRoute>
+                <Event />
+              </ProtectedRoute>
+            } />
+            <Route path="/contacts" element={<Contacts />} />
+            <Route path="/blog" element={
+              <ProtectedRoute>
+                <Blog/>
+              </ProtectedRoute>
+            } />
+            <Route path="/events/:id" element={
+              <ProtectedRoute>
+                <EventDetailsPage/>
+              </ProtectedRoute>
+            } />
+            <Route path="/blog/:id" element={
+              <ProtectedRoute>
+                <BlogDetailsPage/>
+              </ProtectedRoute>
+            } />
+            <Route path="/calender" element={
+              <ProtectedRoute>
+                <Calender/>
+              </ProtectedRoute>
+            } />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
      </ThemeProvider>
     </>
   )

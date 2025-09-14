@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import EventCard from "../components/EventCard";
+import StarsBackground from "../components/StarsBackground";
 
 const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg || "#f5f5f5"};
   width: 100%;
-  min-height: 95vh;
+  min-height: 100vh;
   padding: 16px;
   overflow-x: hidden;
+  position: relative;
+  z-index: 1;
 `;
 
 
@@ -23,46 +25,48 @@ const Title = styled.div`
   }
 `;
 
-const Tabs = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 16px;
+const SectionTitle = styled.div`
+  font-size: 36px;
+  text-align: center;
+  font-weight: 600;
+  margin: 40px 0 20px 0;
+  color: ${({ theme }) => theme.text_primary};
+  
+  @media (max-width: 768px) {
+    font-size: 28px;
+    margin: 30px 0 15px 0;
+  }
+`;
 
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    background-color: ${({ theme }) => theme.cardBackground || "#333"};
-    color: ${({ theme }) => theme.text_primary || "#333"};
-    border: 1px solid ${({ theme }) => theme.borderColor || "#ddd"};
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-
-    &:hover,
-    &.active {
-      background-color: ${({ theme }) => theme.activeBg || "black"};
-      color: ${({ theme }) => theme.activeText || "#fff"};
-    }
+const SectionContainer = styled.div`
+  margin-bottom: 60px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 40px;
   }
 `;
 
 const GridContainer = styled.ul`
   display: grid;
   grid-template-columns: 1fr; /* Single column on mobile */
-  gap: 0.5rem 1rem; /* gap-y-6 corresponds to 1.5rem (24px) in Tailwind, gap-2 corresponds to 0.5rem (8px) */
+  gap: 1rem; /* Reduced gap for better spacing */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr); /* Two columns on small screens */
+    gap: 1.5rem;
   }
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr); /* Three columns on medium screens */
+    gap: 2rem;
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr); /* Four columns on large screens */
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for better card sizing */
+    gap: 2rem;
   }
 `;
 
@@ -70,7 +74,6 @@ export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Event = () => {
   const [data, setData] = useState([]);
-  const [filter, setFilter] = useState("upcoming");
 
   useEffect(() => {
     fetch(backendUrl + "/api/events/")
@@ -86,34 +89,59 @@ const Event = () => {
   }, []);
   console.log(data);
 
-  // Filter cards based on the selected filter
-  const filteredData = data.filter((event) => event.state === filter);
+  // Filter events by state and limit to 6 cards each
+  const upcomingEvents = data.filter((event) => event.state === "upcoming").slice(0, 6);
+  const ongoingEvents = data.filter((event) => event.state === "ongoing").slice(0, 6);
+  const completedEvents = data.filter((event) => event.state === "completed").slice(0, 6);
 
   return (
-    <Body>
-       <Title>Events</Title>
-      {/* Tabs for filtering events */}
-      <Tabs>
-        {["upcoming", "ongoing", "completed"].map((state) => (
-          <button
-            key={state}
-            className={filter === state ? "active" : ""}
-            onClick={() => setFilter(state)}
-          >
-            {state.charAt(0).toUpperCase() + state.slice(1)} Events
-          </button>
-        ))}
-      </Tabs>
+    <StarsBackground>
+      <Body>
+        <Title>Events</Title>
+        
+        {/* Upcoming Events Section - Only show if there are upcoming events */}
+        {upcomingEvents.length > 0 && (
+          <SectionContainer>
+            <SectionTitle>Upcoming Events</SectionTitle>
+            <GridContainer>
+              {upcomingEvents.map((event) => (
+                <li key={event.id}>
+                  <EventCard data={event} />
+                </li>
+              ))}
+            </GridContainer>
+          </SectionContainer>
+        )}
 
-      {/* Render cards in grid */}
-      <GridContainer>
-        {filteredData.map((event) => (
-          <li key={event.id}>
-            <EventCard data={event} />
-          </li>
-        ))}
-      </GridContainer>
-    </Body>
+        {/* Ongoing Events Section - Only show if there are ongoing events */}
+        {ongoingEvents.length > 0 && (
+          <SectionContainer>
+            <SectionTitle>Ongoing Events</SectionTitle>
+            <GridContainer>
+              {ongoingEvents.map((event) => (
+                <li key={event.id}>
+                  <EventCard data={event} />
+                </li>
+              ))}
+            </GridContainer>
+          </SectionContainer>
+        )}
+
+        {/* Completed Events Section - Only show if there are completed events */}
+        {completedEvents.length > 0 && (
+          <SectionContainer>
+            <SectionTitle>Completed Events</SectionTitle>
+            <GridContainer>
+              {completedEvents.map((event) => (
+                <li key={event.id}>
+                  <EventCard data={event} />
+                </li>
+              ))}
+            </GridContainer>
+          </SectionContainer>
+        )}
+      </Body>
+    </StarsBackground>
   );
 };
 

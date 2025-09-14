@@ -79,10 +79,56 @@ const BlogContent = styled.p`
   margin-top: 16px;
 `;
 
+const ImageGallery = styled.div`
+  margin-top: 24px;
+`;
+
+const GalleryTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary || "#333"};
+  margin-bottom: 16px;
+`;
+
+const ImageGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+`;
+
+const GalleryImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const MainImage = styled.div`
+  width: 100%;
+  height: 400px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
+const MainImageDisplay = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const BlogDetailsPage = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -91,6 +137,11 @@ const BlogDetailsPage = () => {
         const response = await axios.get(`${backendUrl}/api/blogs/${id}`);
         console.log("Fetched Blog Data:", response.data);
         setBlog(response.data); // Assuming the blog data is directly in response.data
+        
+        // Set the first image as selected by default
+        if (response.data?.images?.length > 0) {
+          setSelectedImage(response.data.images[0]);
+        }
       } catch (error) {
         console.error("Error fetching blog details:", error);
       } finally {
@@ -116,6 +167,14 @@ const BlogDetailsPage = () => {
           <Title>{blog.title}</Title>
           <BackButton onClick={() => navigate(-1)}>Back</BackButton>
         </Header>
+        
+        {/* Main Image Display */}
+        {selectedImage && (
+          <MainImage>
+            <MainImageDisplay src={selectedImage.url} alt={blog.title} />
+          </MainImage>
+        )}
+        
         <BlogDetails>
           <BlogInfo>
             <InfoItem>
@@ -129,6 +188,26 @@ const BlogDetailsPage = () => {
             </InfoItem>
           </BlogInfo>
           <BlogContent>{blog.longDescription}</BlogContent>
+          
+          {/* Image Gallery */}
+          {blog.images && blog.images.length > 1 && (
+            <ImageGallery>
+              <GalleryTitle>Blog Gallery</GalleryTitle>
+              <ImageGrid>
+                {blog.images.map((image, index) => (
+                  <GalleryImage
+                    key={index}
+                    src={image.url}
+                    alt={`${blog.title} - Image ${index + 1}`}
+                    onClick={() => setSelectedImage(image)}
+                    style={{
+                      border: selectedImage?.url === image.url ? '3px solid #38a169' : 'none'
+                    }}
+                  />
+                ))}
+              </ImageGrid>
+            </ImageGallery>
+          )}
         </BlogDetails>
       </Container>
     </Body>

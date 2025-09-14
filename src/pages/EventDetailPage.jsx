@@ -222,11 +222,57 @@ const EventDescription = styled.p`
   margin-top: 16px;
 `;
 
+const ImageGallery = styled.div`
+  margin-top: 24px;
+`;
+
+const GalleryTitle = styled.h3`
+  font-size: 20px;
+  font-weight: 600;
+  color: ${({ theme }) => theme.text_primary || "#333"};
+  margin-bottom: 16px;
+`;
+
+const ImageGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+`;
+
+const GalleryImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
+const MainImage = styled.div`
+  width: 100%;
+  height: 400px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+`;
+
+const MainImageDisplay = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
 const EventDetailsPage = () => {
   const { id } = useParams();
   console.log("Event ID:", id);
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -235,6 +281,11 @@ const EventDetailsPage = () => {
         const response = await axios.get(`${backendUrl}/api/events/${id}`);
         console.log("Fetched Event Data:", response.data);
         setEvent(response.data.event); // Accessing the event object directly
+        
+        // Set the first image as selected by default
+        if (response.data.event?.images?.length > 0) {
+          setSelectedImage(response.data.event.images[0]);
+        }
       } catch (error) {
         console.error("Error fetching event details:", error);
       } finally {
@@ -257,9 +308,17 @@ const EventDetailsPage = () => {
     <Body>
       <Container>
         <Header>
-          <Title>{event.title}</Title> {/* Displaying the title of the event */}
+          <Title>{event.title}</Title>
           <BackButton onClick={() => navigate(-1)}>Back</BackButton>
         </Header>
+        
+        {/* Main Image Display */}
+        {selectedImage && (
+          <MainImage>
+            <MainImageDisplay src={selectedImage.url} alt={event.title} />
+          </MainImage>
+        )}
+        
         <EventDetails>
           <EventInfo>
             <InfoItem>
@@ -276,6 +335,26 @@ const EventDetailsPage = () => {
             </InfoItem>
           </EventInfo>
           <EventDescription>{event.longDescription}</EventDescription>
+          
+          {/* Image Gallery */}
+          {event.images && event.images.length > 1 && (
+            <ImageGallery>
+              <GalleryTitle>Event Gallery</GalleryTitle>
+              <ImageGrid>
+                {event.images.map((image, index) => (
+                  <GalleryImage
+                    key={index}
+                    src={image.url}
+                    alt={`${event.title} - Image ${index + 1}`}
+                    onClick={() => setSelectedImage(image)}
+                    style={{
+                      border: selectedImage?.url === image.url ? '3px solid #38a169' : 'none'
+                    }}
+                  />
+                ))}
+              </ImageGrid>
+            </ImageGallery>
+          )}
         </EventDetails>
       </Container>
     </Body>

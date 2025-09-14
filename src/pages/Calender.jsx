@@ -1,18 +1,22 @@
 import React from 'react'
 import styled from 'styled-components'
-import Calendar from '../../components/cards/calendar';
+import Calendar from '../components/Calendar';
+import StarsBackground from '../components/StarsBackground';
 const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg};
   width: 100%;
-  height: 95vh;
+  min-height: 100vh;
   overflow-x: hidden;
   position: relative;
+  z-index: 1;
+  padding: 16px;
 `;
 const Calender = () => {
   return (
-    <Body>
-      <Calendar />
-    </Body>
+    <StarsBackground>
+      <Body>
+        <Calendar />
+      </Body>
+    </StarsBackground>
   )
 }
 

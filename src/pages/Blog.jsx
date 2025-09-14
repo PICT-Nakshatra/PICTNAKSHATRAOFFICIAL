@@ -59,14 +59,15 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import BlogCard from "../components/BlogCard";
+import StarsBackground from "../components/StarsBackground";
 
 const Body = styled.div`
-  background-color: ${({ theme }) => theme.bg};
   width: 100%;
-  min-height: 95vh;
+  min-height: 100vh;
   padding: 16px;
   overflow-x: hidden;
-  
+  position: relative;
+  z-index: 1;
 `;
 
 const Title = styled.div`
@@ -80,33 +81,61 @@ const Title = styled.div`
     font-size: 32px;
   }
 `;
-const Title1 = styled.div`
-  font-size: 44px;
+
+const SectionTitle = styled.div`
+  font-size: 36px;
   text-align: center;
-  font-weight: 500;
-  margin-top: 200px;
+  font-weight: 600;
+  margin: 40px 0 20px 0;
   color: ${({ theme }) => theme.text_primary};
+  
   @media (max-width: 768px) {
-    margin-top: 12px;
-    font-size: 32px;
+    font-size: 28px;
+    margin: 30px 0 15px 0;
+  }
+`;
+
+const SectionContainer = styled.div`
+  margin-bottom: 60px;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 40px;
   }
 `;
 
 const GridContainer = styled.ul`
   display: grid;
   grid-template-columns: 1fr; /* Single column on mobile */
-  gap: 0.5rem 1rem; /* gap-y-6 corresponds to 1.5rem (24px) in Tailwind, gap-2 corresponds to 0.5rem (8px) */
+  gap: 1rem; /* Reduced gap for better spacing */
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 
   @media (min-width: 640px) {
     grid-template-columns: repeat(2, 1fr); /* Two columns on small screens */
+    gap: 1.5rem;
   }
 
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr); /* Three columns on medium screens */
+    gap: 2rem;
   }
 
   @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr); /* Four columns on large screens */
+    grid-template-columns: repeat(3, 1fr); /* Keep 3 columns for better card sizing */
+    gap: 2rem;
+  }
+`;
+
+const ComingSoon = styled.div`
+  font-size: 44px;
+  text-align: center;
+  font-weight: 500;
+  margin-top: 100px;
+  color: ${({ theme }) => theme.text_primary};
+  @media (max-width: 768px) {
+    margin-top: 60px;
+    font-size: 32px;
   }
 `;
 
@@ -124,18 +153,31 @@ const Blog = () => {
 
   console.log(data);
 
+  // Limit to 6 blogs for better layout
+  const displayBlogs = data.slice(0, 6);
+
   return (
-    <Body>
-      <Title>Blogs</Title>
-      {data.length == 0 ? (<Title1>Coming Soon...</Title1>) : <GridContainer>
-        {data.map((blog) => (
-          <li key={blog.id}>
-            <BlogCard data={blog} />
-          </li>
-        ))}
-      </GridContainer>}
-      
-    </Body>
+    <StarsBackground>
+      <Body>
+        <Title>Blogs</Title>
+        
+        {data.length === 0 ? (
+          <ComingSoon>Coming Soon...</ComingSoon>
+        ) : (
+          <SectionContainer>
+            <SectionTitle>Latest Blogs</SectionTitle>
+            <GridContainer>
+              {displayBlogs.map((blog) => (
+                <li key={blog.id}>
+                  <BlogCard data={blog} />
+                </li>
+              ))}
+            </GridContainer>
+          </SectionContainer>
+        )}
+        
+      </Body>
+    </StarsBackground>
   );
 };
 

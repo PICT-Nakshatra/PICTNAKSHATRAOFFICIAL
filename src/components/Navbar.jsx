@@ -231,6 +231,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled, { useTheme } from "styled-components";
 import { MenuRounded } from "@mui/icons-material";
+import { useAuth } from "../contexts/AuthContext";
 
 const Nav = styled.div`
   background-color: ${({ theme }) => theme.bg};
@@ -380,21 +381,13 @@ const LogoutButton = styled.button`
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const theme = useTheme();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const { isAuthenticated, user, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/login");
+    logout();
+    navigate("/");
   };
 
   return (
@@ -434,7 +427,7 @@ const Navbar = () => {
               Contacts
             </NavLink>
 
-            {isLoggedIn ? (
+            {isAuthenticated ? (
               <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
             ) : (
               <AuthButton
@@ -448,7 +441,7 @@ const Navbar = () => {
         )}
 
         <ButtonContainer>
-          {isLoggedIn ? (
+          {isAuthenticated ? (
             <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
           ) : (
             <AuthButton to="/login">Login</AuthButton>
