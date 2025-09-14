@@ -207,7 +207,9 @@ const Login = () => {
       if (currentState === "Sign Up") {
         result = await signup(name, email, password);
       } else {
+        console.log('Attempting login with:', { email, password: '***' });
         result = await login(email, password);
+        console.log('Login result:', result);
       }
 
       if (result.success) {
