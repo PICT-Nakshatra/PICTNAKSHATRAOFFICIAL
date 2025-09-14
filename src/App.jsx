@@ -11,6 +11,7 @@ import EventDetailsPage from './pages/EventDetailPage'
 import { ToastContainer } from 'react-toastify'
 import Calender from './pages/Calender'
 import BlogDetailsPage from './pages/BlogDetailPage'
+import AuthCallback from './pages/AuthCallback'
 import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import 'react-toastify/dist/ReactToastify.css'
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route path='/' element = {<Home />} />
             <Route path="/login" element={<Login/>} />
+            <Route path="/auth/callback" element={<AuthCallback/>} />
             <Route path="/events" element={
               <ProtectedRoute>
                 <Event />

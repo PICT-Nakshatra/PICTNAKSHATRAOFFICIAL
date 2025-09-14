@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Login successful!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.error || 'Login failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Login failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Signup successful!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.error || 'Signup failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Signup failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -102,7 +102,7 @@ export const AuthProvider = ({ children }) => {
       toast.success('Google login successful!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.error || 'Google login failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Google login failed';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -123,6 +123,8 @@ export const AuthProvider = ({ children }) => {
     signup,
     googleLogin,
     logout,
+    setUser,
+    setToken,
     isAuthenticated: !!token
   };
 
@@ -132,3 +134,4 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
