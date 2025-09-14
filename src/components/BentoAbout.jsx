@@ -353,7 +353,7 @@ export const BentoAbout = () => {
             damping: 50,
           }}
         >
-          <p style={{ fontSize: "1.5rem", lineHeight: "1.6", margin: 0 }}>
+          <p style={{ fontSize: "1.3rem", lineHeight: "1.6", margin: 0 }}>
             Our passion is exploring the cosmos.{" "}
             <span style={{ color: "#888" }}>
               We organize stargazing sessions, astrophotography workshops, rocketry challenges, 
