@@ -94,9 +94,11 @@ const Title1 = styled.div`
 `;
 
 const SectionContainer = styled.div`
+  margin-top: 40px;
   margin-bottom: 60px;
   
   @media (max-width: 768px) {
+    margin-top: 30px;
     margin-bottom: 40px;
   }
 `;
