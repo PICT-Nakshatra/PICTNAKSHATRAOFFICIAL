@@ -6,11 +6,10 @@ import StarsBackground from "../components/StarsBackground";
 const Body = styled.div`
   width: 100%;
   min-height: 100vh;
-  padding: 6rem 16px 16px;
+  padding: 16px;
   overflow-x: hidden;
   position: relative;
   z-index: 1;
-  background-color: ${({ theme }) => theme.bg};
 `;
 
 

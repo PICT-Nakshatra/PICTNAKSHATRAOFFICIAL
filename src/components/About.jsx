@@ -38,8 +38,7 @@ const Container = styled.div`
   justify-items: center;
   width: 100%;
   height: 100%;
-  margin-top: 0;
-  padding-top: 6rem;
+  margin-top: 50px;
 `;
 
 const TabContainer = styled.div`

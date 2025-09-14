@@ -9,8 +9,7 @@ const GalleryContainer = styled.div`
   background-color: ${({ theme }) => theme.bg};
   padding: 2rem 1rem;
   color: ${({ theme }) => theme.text_primary};
-  margin-top: 0;
-  padding-top: 6rem;
+  margin-top: 50px;
 `;
 
 const Title = styled.div`
