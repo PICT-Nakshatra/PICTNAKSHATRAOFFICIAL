@@ -191,37 +191,95 @@ const EventIndicator = styled.div`
   border-radius: 50%;
 `;
 
-const EventTooltip = styled.div`
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #000000;
-  color: #ffffff;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  border: 1px solid #666666;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  z-index: 10;
-  margin-bottom: 0.25rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
+// EventTooltip removed - events now display below calendar
 
-  ${DayCell}:hover & {
-    opacity: 1;
-    visibility: visible;
+const EventsSection = styled.div`
+  margin-top: 2rem;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    margin-top: 1.5rem;
   }
+`;
 
-  &::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 4px solid transparent;
-    border-top-color: #000000;
+const EventsTitle = styled.h3`
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
+`;
+
+const EventsList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  
+  @media (max-width: 768px) {
+    gap: 0.5rem;
+  }
+`;
+
+const EventItem = styled.div`
+  background-color: #333333;
+  border: 1px solid #555555;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #ffffff;
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem;
+  }
+`;
+
+const EventTitle = styled.div`
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  
+  @media (max-width: 768px) {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+  }
+`;
+
+const EventDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #cccccc;
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
+`;
+
+const EventTime = styled.span`
+  color: #38a169;
+  font-weight: 500;
+`;
+
+const EventLocation = styled.span`
+  color: #888888;
+  font-style: italic;
+`;
+
+const NoEventsMessage = styled.div`
+  text-align: center;
+  color: #888888;
+  font-style: italic;
+  padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    font-size: 0.875rem;
   }
 `;
 
@@ -241,6 +299,8 @@ const Calendar = () => {
   const [direction, setDirection] = useState("next");
   const [calendarEvents, setCalendarEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedDateEvents, setSelectedDateEvents] = useState([]);
 
   // Fetch calendar events
   useEffect(() => {
@@ -373,6 +433,12 @@ const Calendar = () => {
     return date.toDateString() === today.toDateString();
   };
 
+  const handleDayClick = (date) => {
+    const events = getEventsForDate(date);
+    setSelectedDate(date);
+    setSelectedDateEvents(events);
+  };
+
   const calendarDays = generateCalendarDays();
 
   if (loading) {
@@ -454,6 +520,7 @@ const Calendar = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.1 }}
+                    onClick={() => handleDayClick(date.date)}
                   >
                     {date.day}
                     {dayEvents.map((event, idx) => (
@@ -463,22 +530,45 @@ const Calendar = () => {
                         index={idx}
                       />
                     ))}
-                    {dayEvents.length > 0 && (
-                      <EventTooltip>
-                        {dayEvents.map((event, idx) => (
-                          <div key={idx}>
-                            {event.title} - {event.time}
-                            {event.location && <div style={{fontSize: '0.7rem', color: '#888'}}>{event.location}</div>}
-                          </div>
-                        ))}
-                      </EventTooltip>
-                    )}
                   </DayCell>
                 );
               })}
             </CalendarDays>
           </AnimatePresence>
         </CalendarGrid>
+
+        {/* Events Display Section */}
+        {selectedDate && (
+          <EventsSection>
+            <EventsTitle>
+              Events for {selectedDate.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </EventsTitle>
+            {selectedDateEvents.length > 0 ? (
+              <EventsList>
+                {selectedDateEvents.map((event, idx) => (
+                  <EventItem key={idx}>
+                    <EventTitle>{event.title}</EventTitle>
+                    <EventDetails>
+                      <EventTime>Time: {event.time}</EventTime>
+                      {event.location && (
+                        <EventLocation>Location: {event.location}</EventLocation>
+                      )}
+                    </EventDetails>
+                  </EventItem>
+                ))}
+              </EventsList>
+            ) : (
+              <NoEventsMessage>
+                No events scheduled for this day.
+              </NoEventsMessage>
+            )}
+          </EventsSection>
+        )}
       </CalendarWrapper>
     </CalendarContainer>
   );
