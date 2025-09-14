@@ -16,6 +16,11 @@ const CalendarContainer = styled.div`
   height: 100%;
   flex-direction: column;
   padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 0.5rem;
+    align-items: stretch;
+  }
 `;
 
 const CalendarWrapper = styled.div`
@@ -26,6 +31,13 @@ const CalendarWrapper = styled.div`
   border-radius: 25px;
   padding: 2rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 768px) {
+    max-width: none;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 15px;
+  }
 `;
 
 const Header = styled.div`
@@ -33,6 +45,11 @@ const Header = styled.div`
   align-items: center;
   gap: 2.5rem;
   margin-bottom: 2.5rem;
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const NavigationButtons = styled.div`
@@ -64,6 +81,11 @@ const MonthYearContainer = styled.div`
   width: 10rem;
   height: 2.5rem;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    width: 8rem;
+    height: 2rem;
+  }
 `;
 
 const MonthYear = styled(motion.h2)`
@@ -77,6 +99,10 @@ const MonthYear = styled(motion.h2)`
   justify-content: center;
   width: 100%;
   margin: 0;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const DaysOfWeek = styled.div`
@@ -92,13 +118,17 @@ const DayHeader = styled.div`
   background-color: #333333;
   color: #888888;
   font-size: 0.875rem;
-  padding: 0.25rem;
-  border-radius: 50%;
+  padding: 0.5rem 0.25rem;
+  border-radius: 0.5rem;
 `;
 
 const CalendarGrid = styled.div`
   position: relative;
   height: 28.75rem;
+  
+  @media (max-width: 768px) {
+    height: 20rem;
+  }
 `;
 
 const CalendarDays = styled(motion.div)`
@@ -109,6 +139,10 @@ const CalendarDays = styled(motion.div)`
   position: absolute;
   inset: 0;
   width: 100%;
+  
+  @media (max-width: 768px) {
+    gap: 0.25rem;
+  }
 `;
 
 const DayCell = styled(motion.div)`
@@ -138,6 +172,12 @@ const DayCell = styled(motion.div)`
       if (props.isCurrentMonth) return "#444444";
       return "#2a2a2a";
     }};
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.25rem;
+    min-height: 2rem;
+    font-size: 0.875rem;
   }
 `;
 
