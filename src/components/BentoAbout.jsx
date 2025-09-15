@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import { FiArrowRight, FiMail, FiMapPin, FiUsers, FiZap, FiTarget } from "react-icons/fi";
 import { SiLinkedin, SiInstagram, SiYoutube } from "react-icons/si";
 import { FaRocket, FaImages } from "react-icons/fa";
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const BentoContainer = styled.div`
   min-height: 100vh;
@@ -226,8 +231,39 @@ const SubmitButton = styled.button`
 `;
 
 export const BentoAbout = () => {
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+
+    if (!email) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const response = await axios.post(backendUrl + '/api/newsletter', { email });
+
+      if (response.data.success) {
+        toast.success('Subscribed successfully! 🎉');
+        setEmail(''); 
+      } else {
+        toast.error(response.data.message || 'Subscription failed. Please try again.');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data?.message || 'Something went wrong. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <BentoContainer>
+      <ToastContainer />
       <Title>About Nakshatra</Title>
       <GridContainer
         initial="initial"
@@ -439,13 +475,16 @@ export const BentoAbout = () => {
           }}
         >
           <p style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>Join our astronomy community</p>
-          <EmailForm onSubmit={(e) => e.preventDefault()}>
+          <EmailForm onSubmit={onSubmitHandler}>
             <EmailInput
               type="email"
               placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={isSubmitting}
             />
-            <SubmitButton type="submit">
-              <FiMail /> Join Us
+            <SubmitButton type="submit" disabled={isSubmitting}>
+              <FiMail /> {isSubmitting ? 'Subscribing...' : 'Join Us'}
             </SubmitButton>
           </EmailForm>
         </ContactBlock>
