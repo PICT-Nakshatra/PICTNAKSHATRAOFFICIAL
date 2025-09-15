@@ -317,7 +317,7 @@ const Login = () => {
   const [resendLoading, setResendLoading] = useState(false);
   const [userEmail, setUserEmail] = useState("");
   
-  const { login, signup, isAuthenticated } = useAuth();
+  const { login, signup, completeSignup, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -326,6 +326,18 @@ const Login = () => {
       navigate("/");
     }
   }, [isAuthenticated, navigate]);
+
+  // Show loading while checking authentication
+  if (isAuthenticated) {
+    return (
+      <Body>
+        <VantaBackground id="vanta-background" />
+        <Wrapper>
+          <Title>Redirecting...</Title>
+        </Wrapper>
+      </Body>
+    );
+  }
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
@@ -415,7 +427,7 @@ const Login = () => {
         setShowVerificationModal(false);
         setVerificationCode('');
         // Now complete the signup process
-        const signupResult = await signup(name, userEmail, password);
+        const signupResult = await completeSignup(name, userEmail, password);
         if (signupResult.success) {
           navigate("/");
         }

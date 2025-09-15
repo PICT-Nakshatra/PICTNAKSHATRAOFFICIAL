@@ -101,6 +101,30 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // Complete signup after email verification
+  const completeSignup = async (name, email, password) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/complete-signup`, {
+        name,
+        email,
+        password
+      });
+
+      const { token: newToken, user: userData } = response.data;
+      
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+      setUser(userData);
+      
+      toast.success('Account created successfully!');
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || error.response?.data?.error || 'Signup completion failed';
+      toast.error(message);
+      return { success: false, error: message };
+    }
+  };
+
   const googleLogin = async (googleData) => {
     try {
       const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/google-auth`, {
@@ -135,6 +159,7 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     signup,
+    completeSignup,
     googleLogin,
     logout,
     setUser,
