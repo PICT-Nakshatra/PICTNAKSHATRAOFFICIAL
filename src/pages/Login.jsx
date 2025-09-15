@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import * as THREE from "three";
 import RINGS from "vanta/dist/vanta.rings.min";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Body = styled.div`
   display: flex;
@@ -181,16 +183,141 @@ const Divider = styled.div`
   }
 `;
 
+// Verification Modal Styles
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background-color: rgba(17, 25, 40, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: rgba(23, 92, 230, 0.1) 0px 4px 24px;
+  text-align: center;
+  position: relative;
+`;
+
+const ModalTitle = styled.h2`
+  color: ${({ theme }) => theme.text_primary};
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 16px;
+`;
+
+const ModalDescription = styled.p`
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 14px;
+  margin-bottom: 24px;
+  line-height: 1.5;
+`;
+
+const CodeInput = styled.input`
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid ${({ theme }) => theme.text_secondary + 50};
+  outline: none;
+  font-size: 18px;
+  color: ${({ theme }) => theme.text_primary};
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  letter-spacing: 2px;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.primary};
+  }
+`;
+
+const ModalButton = styled.button`
+  width: 100%;
+  background-color: ${({ theme }) => theme.primary};
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.3s;
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.primary + 'dd'};
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+const ResendButton = styled.button`
+  background-color: transparent;
+  color: ${({ theme }) => theme.text_secondary};
+  border: 1px solid ${({ theme }) => theme.text_secondary + 50};
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover:not(:disabled) {
+    background-color: ${({ theme }) => theme.text_secondary + 20};
+    color: ${({ theme }) => theme.text_primary};
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+`;
+
+const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.text_secondary};
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  
+  &:hover {
+    color: ${({ theme }) => theme.text_primary};
+  }
+`;
+
 const Login = () => {
   const [currentState, setCurrentState] = useState("Login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [verificationCode, setVerificationCode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pendingVerification, setPendingVerification] = useState(null);
   
-  const { login, signup, verifyEmail, resendVerificationCode, isAuthenticated } = useAuth();
+  // Email verification states
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [verifying, setVerifying] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  
+  const { login, signup, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -207,23 +334,20 @@ const Login = () => {
     try {
       let result;
       if (currentState === "Sign Up") {
-        result = await signup(name, email, password);
-        
-        if (result.success && result.requiresVerification) {
-          setPendingVerification({ email, name });
-          setCurrentState("Verify Email");
-          return;
+        // For signup, send verification email instead of direct signup
+        result = await sendVerificationEmail(name, email, password);
+        if (result.success) {
+          setUserEmail(email);
+          setShowVerificationModal(true);
+          toast.success("Verification code sent to your email!");
         }
-      } else if (currentState === "Verify Email") {
-        result = await verifyEmail(pendingVerification.email, verificationCode);
       } else {
         console.log('Attempting login with:', { email, password: '***' });
         result = await login(email, password);
         console.log('Login result:', result);
-      }
-
-      if (result.success) {
-        navigate("/");
+        if (result.success) {
+          navigate("/");
+        }
       }
     } catch (error) {
       console.error("Auth error:", error);
@@ -232,22 +356,113 @@ const Login = () => {
     }
   };
 
-  const handleResendCode = async () => {
-    if (!pendingVerification) return;
-    
-    setLoading(true);
-    try {
-      await resendVerificationCode(pendingVerification.email);
-    } catch (error) {
-      console.error("Resend error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleGoogleLogin = () => {
     const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
     window.location.href = `${backendUrl}/api/auth/google`;
+  };
+
+  // Send verification email
+  const sendVerificationEmail = async (name, email, password) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/send-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        return { success: true };
+      } else {
+        toast.error(data.message || 'Failed to send verification email');
+        return { success: false, error: data.message };
+      }
+    } catch (error) {
+      console.error('Send verification error:', error);
+      toast.error('Failed to send verification email');
+      return { success: false, error: error.message };
+    }
+  };
+
+  // Verify email code
+  const verifyEmailCode = async () => {
+    if (!verificationCode || verificationCode.length !== 6) {
+      toast.error('Please enter a valid 6-digit code');
+      return;
+    }
+
+    setVerifying(true);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/verify-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          email: userEmail, 
+          code: verificationCode 
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        toast.success('Email verified successfully!');
+        setShowVerificationModal(false);
+        setVerificationCode('');
+        // Now complete the signup process
+        const signupResult = await signup(name, userEmail, password);
+        if (signupResult.success) {
+          navigate("/");
+        }
+      } else {
+        toast.error(data.message || 'Invalid verification code');
+      }
+    } catch (error) {
+      console.error('Verification error:', error);
+      toast.error('Verification failed. Please try again.');
+    } finally {
+      setVerifying(false);
+    }
+  };
+
+  // Resend verification code
+  const resendVerificationCode = async () => {
+    setResendLoading(true);
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/resend-verification`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: userEmail }),
+      });
+
+      const data = await response.json();
+      
+      if (data.success) {
+        toast.success('Verification code resent to your email!');
+      } else {
+        toast.error(data.message || 'Failed to resend verification code');
+      }
+    } catch (error) {
+      console.error('Resend verification error:', error);
+      toast.error('Failed to resend verification code');
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
+  // Close verification modal
+  const closeVerificationModal = () => {
+    setShowVerificationModal(false);
+    setVerificationCode('');
+    setUserEmail('');
   };
 
   useEffect(() => {
@@ -276,6 +491,7 @@ const Login = () => {
 
   return (
     <Body>
+      <ToastContainer />
       <VantaBackground id="vanta-background" />
       <Wrapper>
         <Title>{currentState}</Title>
@@ -289,83 +505,30 @@ const Login = () => {
               required
             />
           )}
-          
-          {currentState === "Verify Email" ? (
-            <>
-              <div style={{ textAlign: "center", marginBottom: "20px", color: "#ffffff" }}>
-                <h3>Verify Your Email</h3>
-                <p style={{ color: "#888", fontSize: "14px" }}>
-                  We've sent a 6-digit verification code to<br />
-                  <strong>{pendingVerification?.email}</strong>
-                </p>
-              </div>
-              <Input
-                onChange={(e) => setVerificationCode(e.target.value)}
-                value={verificationCode}
-                type="text"
-                placeholder="Enter 6-digit code"
-                maxLength="6"
-                required
-                style={{ textAlign: "center", fontSize: "18px", letterSpacing: "2px" }}
-              />
-              <div style={{ textAlign: "center", margin: "10px 0" }}>
-                <p style={{ color: "#888", fontSize: "12px", margin: "5px 0" }}>
-                  Didn't receive the code?
-                </p>
-                <button
-                  type="button"
-                  onClick={handleResendCode}
-                  disabled={loading}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    color: "#8B5CF6",
-                    cursor: "pointer",
-                    textDecoration: "underline",
-                    fontSize: "12px"
-                  }}
-                >
-                  Resend Code
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <Input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                type="email"
-                placeholder="Email"
-                required
-              />
-              <Input
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                type="password"
-                placeholder="Password"
-                required
-              />
-            </>
-          )}
-          
+          <Input
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            type="email"
+            placeholder="Email"
+            required
+          />
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            type="password"
+            placeholder="Password"
+            required
+          />
           <TextRow>
-            {currentState === "Verify Email" ? (
-              <p onClick={() => setCurrentState("Sign Up")}>Back to Sign Up</p>
+            <p>Forgot your password?</p>
+            {currentState === "Login" ? (
+              <p onClick={() => setCurrentState("Sign Up")}>Create Account</p>
             ) : (
-              <>
-                <p>Forgot your password?</p>
-                {currentState === "Login" ? (
-                  <p onClick={() => setCurrentState("Sign Up")}>Create Account</p>
-                ) : (
-                  <p onClick={() => setCurrentState("Login")}>Login Here</p>
-                )}
-              </>
+              <p onClick={() => setCurrentState("Login")}>Login Here</p>
             )}
           </TextRow>
           <Button type="submit" disabled={loading}>
-            {loading ? "Loading..." : 
-             currentState === "Verify Email" ? "Verify Email" :
-             currentState === "Login" ? "Sign In" : "Sign Up"}
+            {loading ? "Loading..." : (currentState === "Login" ? "Sign In" : "Sign Up")}
           </Button>
         </form>
 
@@ -383,6 +546,43 @@ const Login = () => {
           {loading ? "Loading..." : "Continue with Google"}
         </GoogleButton>
       </Wrapper>
+
+      {/* Email Verification Modal */}
+      {showVerificationModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <CloseButton onClick={closeVerificationModal}>×</CloseButton>
+            <ModalTitle>Verify Your Email</ModalTitle>
+            <ModalDescription>
+              We've sent a 6-digit verification code to <strong>{userEmail}</strong>. 
+              Please check your email and enter the code below.
+            </ModalDescription>
+            
+            <CodeInput
+              type="text"
+              placeholder="000000"
+              value={verificationCode}
+              onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+              maxLength={6}
+              disabled={verifying}
+            />
+            
+            <ModalButton 
+              onClick={verifyEmailCode} 
+              disabled={verifying || verificationCode.length !== 6}
+            >
+              {verifying ? 'Verifying...' : 'Verify Email'}
+            </ModalButton>
+            
+            <ResendButton 
+              onClick={resendVerificationCode} 
+              disabled={resendLoading}
+            >
+              {resendLoading ? 'Sending...' : 'Resend Code'}
+            </ResendButton>
+          </ModalContent>
+        </ModalOverlay>
+      )}
     </Body>
   );
 };
