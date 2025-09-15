@@ -9,6 +9,11 @@ const Body = styled.div`
   position: relative;
   z-index: 1;
   padding: 16px;
+  padding-top: 100px;
+  
+  @media (max-width: 768px) {
+    padding-top: 90px;
+  }
 `;
 const Calender = () => {
   return (

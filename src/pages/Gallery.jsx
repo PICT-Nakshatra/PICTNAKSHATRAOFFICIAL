@@ -8,7 +8,12 @@ const GalleryContainer = styled.div`
   min-height: 100vh;
   background-color: ${({ theme }) => theme.bg};
   padding: 2rem 1rem;
+  padding-top: 120px;
   color: ${({ theme }) => theme.text_primary};
+  
+  @media (max-width: 768px) {
+    padding-top: 110px;
+  }
 `;
 
 const Title = styled.div`

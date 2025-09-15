@@ -38,6 +38,11 @@ const Body = styled.div`
   height: 150vh;
   overflow-x: hidden;
   position: relative;
+  padding-top: 100px;
+  
+  @media (max-width: 768px) {
+    padding-top: 90px;
+  }
 `;
 
 const Title = styled.h2`

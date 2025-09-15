@@ -16,6 +16,11 @@ const BentoContainer = styled.div`
   padding: 2rem 1rem;
   color: ${({ theme }) => theme.text_primary};
   margin-top: 50px;
+  
+  @media (max-width: 768px) {
+    margin-top: -140px;
+    padding: 1rem 1rem;
+  }
 `;
 
 const Title = styled.div`

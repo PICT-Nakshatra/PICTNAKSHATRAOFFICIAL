@@ -66,9 +66,14 @@ const Body = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 16px;
+  padding-top: 100px;
   overflow-x: hidden;
   position: relative;
   z-index: 1;
+  
+  @media (max-width: 768px) {
+    padding-top: 90px;
+  }
 `;
 
 const Title = styled.div`

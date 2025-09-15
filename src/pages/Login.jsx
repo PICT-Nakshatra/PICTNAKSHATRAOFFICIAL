@@ -41,12 +41,12 @@ const Wrapper = styled.div`
   gap: 20px;
   box-sizing: border-box;
   z-index: 2;
-  margin: 150px 0 0 150px;
+  margin: 200px 0 0 150px;
 
   @media (max-width: 768px) {
     max-width: 90%;
     padding: 24px;
-    margin: 20px;
+    margin: 120px 20px 20px 20px;
   }
 `;
 
