@@ -238,12 +238,16 @@ const NavbarContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 80px;
   z-index: 1000;
   pointer-events: none;
   
   > * {
     pointer-events: auto;
+  }
+  
+  @media (max-width: 768px) {
+    height: 70px;
   }
 `;
 
@@ -274,7 +278,7 @@ const Navbar = () => {
         items={menuItems}
         socialItems={socialItems}
         displaySocials={true}
-        displayItemNumbering={true}
+        displayItemNumbering={false}
         menuButtonColor="#F2F3F4"
         openMenuButtonColor="#F2F3F4"
         changeMenuColorOnOpen={true}
