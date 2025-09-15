@@ -186,9 +186,11 @@ const Login = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [verificationCode, setVerificationCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState(null);
   
-  const { login, signup, isAuthenticated } = useAuth();
+  const { login, signup, verifyEmail, resendVerificationCode, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   // Redirect if already authenticated
@@ -206,6 +208,14 @@ const Login = () => {
       let result;
       if (currentState === "Sign Up") {
         result = await signup(name, email, password);
+        
+        if (result.success && result.requiresVerification) {
+          setPendingVerification({ email, name });
+          setCurrentState("Verify Email");
+          return;
+        }
+      } else if (currentState === "Verify Email") {
+        result = await verifyEmail(pendingVerification.email, verificationCode);
       } else {
         console.log('Attempting login with:', { email, password: '***' });
         result = await login(email, password);
@@ -217,6 +227,19 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Auth error:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    if (!pendingVerification) return;
+    
+    setLoading(true);
+    try {
+      await resendVerificationCode(pendingVerification.email);
+    } catch (error) {
+      console.error("Resend error:", error);
     } finally {
       setLoading(false);
     }
@@ -266,30 +289,83 @@ const Login = () => {
               required
             />
           )}
-          <Input
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            type="email"
-            placeholder="Email"
-            required
-          />
-          <Input
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-            type="password"
-            placeholder="Password"
-            required
-          />
+          
+          {currentState === "Verify Email" ? (
+            <>
+              <div style={{ textAlign: "center", marginBottom: "20px", color: "#ffffff" }}>
+                <h3>Verify Your Email</h3>
+                <p style={{ color: "#888", fontSize: "14px" }}>
+                  We've sent a 6-digit verification code to<br />
+                  <strong>{pendingVerification?.email}</strong>
+                </p>
+              </div>
+              <Input
+                onChange={(e) => setVerificationCode(e.target.value)}
+                value={verificationCode}
+                type="text"
+                placeholder="Enter 6-digit code"
+                maxLength="6"
+                required
+                style={{ textAlign: "center", fontSize: "18px", letterSpacing: "2px" }}
+              />
+              <div style={{ textAlign: "center", margin: "10px 0" }}>
+                <p style={{ color: "#888", fontSize: "12px", margin: "5px 0" }}>
+                  Didn't receive the code?
+                </p>
+                <button
+                  type="button"
+                  onClick={handleResendCode}
+                  disabled={loading}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    color: "#8B5CF6",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    fontSize: "12px"
+                  }}
+                >
+                  Resend Code
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Input
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                type="email"
+                placeholder="Email"
+                required
+              />
+              <Input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                type="password"
+                placeholder="Password"
+                required
+              />
+            </>
+          )}
+          
           <TextRow>
-            <p>Forgot your password?</p>
-            {currentState === "Login" ? (
-              <p onClick={() => setCurrentState("Sign Up")}>Create Account</p>
+            {currentState === "Verify Email" ? (
+              <p onClick={() => setCurrentState("Sign Up")}>Back to Sign Up</p>
             ) : (
-              <p onClick={() => setCurrentState("Login")}>Login Here</p>
+              <>
+                <p>Forgot your password?</p>
+                {currentState === "Login" ? (
+                  <p onClick={() => setCurrentState("Sign Up")}>Create Account</p>
+                ) : (
+                  <p onClick={() => setCurrentState("Login")}>Login Here</p>
+                )}
+              </>
             )}
           </TextRow>
           <Button type="submit" disabled={loading}>
-            {loading ? "Loading..." : (currentState === "Login" ? "Sign In" : "Sign Up")}
+            {loading ? "Loading..." : 
+             currentState === "Verify Email" ? "Verify Email" :
+             currentState === "Login" ? "Sign In" : "Sign Up"}
           </Button>
         </form>
 

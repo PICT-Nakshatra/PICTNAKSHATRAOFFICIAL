@@ -86,16 +86,64 @@ export const AuthProvider = ({ children }) => {
         password
       });
 
+      const { requiresVerification, user: userData } = response.data;
+      
+      if (requiresVerification) {
+        toast.success('Registration successful! Please check your email for verification code.');
+        return { 
+          success: true, 
+          requiresVerification: true, 
+          user: userData,
+          message: response.data.message 
+        };
+      } else {
+        // This shouldn't happen with the new flow, but keeping for compatibility
+        const { token: newToken } = response.data;
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
+        setUser(userData);
+        toast.success('Signup successful!');
+        return { success: true };
+      }
+    } catch (error) {
+      const message = error.response?.data?.message || error.response?.data?.error || 'Signup failed';
+      toast.error(message);
+      return { success: false, error: message };
+    }
+  };
+
+  const verifyEmail = async (email, verificationCode) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/verify-email`, {
+        email,
+        verificationCode
+      });
+
       const { token: newToken, user: userData } = response.data;
       
       localStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
       
-      toast.success('Signup successful!');
+      toast.success('Email verified successfully! Welcome to PICT Nakshatra!');
       return { success: true };
     } catch (error) {
-      const message = error.response?.data?.message || error.response?.data?.error || 'Signup failed';
+      const message = error.response?.data?.message || error.response?.data?.error || 'Email verification failed';
+      toast.error(message);
+      return { success: false, error: message };
+    }
+  };
+
+  const resendVerificationCode = async (email) => {
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000'}/api/users/resend-verification`, {
+        email
+      });
+
+      toast.success('Verification code sent successfully! Please check your email.');
+      return { success: true };
+    } catch (error) {
+      const message = error.response?.data?.message || error.response?.data?.error || 'Failed to resend verification code';
       toast.error(message);
       return { success: false, error: message };
     }
@@ -135,6 +183,8 @@ export const AuthProvider = ({ children }) => {
     loading,
     login,
     signup,
+    verifyEmail,
+    resendVerificationCode,
     googleLogin,
     logout,
     setUser,
