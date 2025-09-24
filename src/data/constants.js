@@ -122,14 +122,6 @@ export const teamData = [
     desc: "Technical lead",
   },
   {
-    name: "Shravan Upadhye",
-    title: "Co-Founder",
-    image: "/PHOTO-2025-01-18-22-20-34.jpg",
-    links:
-      "https://www.linkedin.com/in/shravan-upadhye-140610296?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-    desc: "Lead of Event Management",
-  },
-  {
     name: "Dhanashree Sonawane",
     title: "Co-Founder",
     image: "/PHOTO-2025-01-18-21-55-49.jpg",
@@ -173,9 +165,9 @@ export const teamData = [
 export const webData1 = [
   {
     name: "Aayush Agrawal",
-    title: "Full Stack Developer",
+    title: "Web Team Head",
     image: "/ProfAayush.JPG",
     links: "www.linkedin.com/in/aayush-agrawal1904",
-    desc: "Passionate about coding and problem-solving",
+    desc: "Next.js |  Full Stack Developer | Python Fast API | Devops",
   },
 ];

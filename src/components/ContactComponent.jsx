@@ -310,7 +310,7 @@ const Contact = () => {
           Feel free to reach out to us for any questions or opportunities!
         </Desc>
         <ContactForm onSubmit={handleSubmit}>
-          <ContactTitle>Email Me 🚀</ContactTitle>
+          <ContactTitle>Email Me</ContactTitle>
           <ContactInput
             type="text"
             name="name"
