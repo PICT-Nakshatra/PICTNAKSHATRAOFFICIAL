@@ -2,12 +2,9 @@ export const Bio = {
   title: "Nakshatra",
   clubs: [
     "Stargazers of PICT",
-    "Rocketry & Space Explorers",
     "Cosmos Enthusiasts",
     "Universe Unfolded",
-    "Where Astronomy Meets Passion",
     "Beyond the Night Sky",
-    "Exploring Space, Inspiring Minds",
   ],
   description:
     "Welcome to the official website of PICT Nakshatra, the Astronomy Club of PICT. We are a community of astronomy enthusiasts dedicated to exploring the wonders of the universe.",
