@@ -20,7 +20,6 @@ import 'react-toastify/dist/ReactToastify.css'
 
 
 function App() {
-
   return (
     <>
      <ThemeProvider theme={darkTheme}>
