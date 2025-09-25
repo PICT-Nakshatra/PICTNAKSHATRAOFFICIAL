@@ -6,7 +6,7 @@ import FAQ from '../components/FAQ'
 import Gallary from '../components/Gallary'
 import Activities from '../components/Activities';
 import Footer from '../components/Footer';
-import { items, tabs } from '../data/constants';
+import { HomeItems, tabs } from '../data/constants';
 import NewsLetter from '../components/NewsLetter';
 
 const Body = styled.div`
@@ -22,7 +22,7 @@ const Home = () => {
     <Body>
           <Hero />
           <BentoAbout />
-          <Gallary items={items}/>
+          <Gallary items={HomeItems}/>
           <Activities />
           <NewsLetter />
           <FAQ tabs = {tabs}/>

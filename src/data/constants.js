@@ -124,6 +124,27 @@ export const items = [
   },
 ];
 
+export const HomeItems = [
+  {
+    url: "/G4.jpeg",
+  },
+  {
+    url: "/G5.jpeg",
+  },
+  {
+    url: "/G13.jpeg",
+  },
+  {
+    url: "/G8.jpeg",
+  },
+  {
+    url: "WhatsApp Image 2024-07-09 at 13.27.54.jpg",
+  },
+  {
+    url: "/IMG-20240927-WA0119.jpg",
+  },
+];
+
 export const tabs = [
   {
     title: "How to join",
