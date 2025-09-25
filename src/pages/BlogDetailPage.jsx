@@ -116,6 +116,13 @@ const MainImage = styled.div`
   margin: 0 auto 24px; 
   border-radius: 12px;
   overflow: hidden;
+
+  @media only screen and (max-width: 768px) {
+    width: 80%;         
+    max-width: 300px;   
+    height: auto;       
+    aspect-ratio: 1 / 1;
+  }
 `;
 
 const MainImageDisplay = styled.img`

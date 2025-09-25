@@ -2,21 +2,6 @@ import React, { useRef, useState } from "react";
 import styled, { css } from "styled-components";
 import { FaLinkedin } from "react-icons/fa";
 
-// Styled Components
-// const CardContainer = styled.div`
-//   position: relative;
-//   border-radius: 20px;
-//   border: 1px solid #333;
-//   background: #121212;
-//   overflow: hidden;
-//   padding: 20px;
-//   transition: transform 0.3s ease;
-//   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-
-//   &:hover {
-//     transform: translateY(-10px);
-//   }
-// `;
 const CardContainer = styled.div`
   position: relative;
   border-radius: 20px;

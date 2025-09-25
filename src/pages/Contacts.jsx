@@ -1,30 +1,3 @@
-// import React from 'react'
-// import styled, { ThemeProvider } from 'styled-components'
-// import ContactComponent from '../components/ContactComponent';
-// import { teamData } from '../data/constants';
-// import MyComponent from '../components/cards/SocialCard';
-// const Body = styled.div`
-//   background-color: ${({ theme }) => theme.bg};
-//   width: 100%;
-//   height: 150vh;
-//   overflow-x: hidden;
-//   position: relative;
-//   overflow: hidden;
-// `;
-
-// const Home = () => {
-//   return (
-//     <>
-//     <Body>
-//           <ContactComponent />
-//           <MyComponent data = {teamData} />
-//     </Body>
-//     </>
-//   )
-// }
-
-// export default Home
-
 import React from "react";
 import styled, { ThemeProvider } from "styled-components";
 import ContactComponent from "../components/ContactComponent";
@@ -35,7 +8,7 @@ import TeamWebCard from '../components/cards/webCard'
 const Body = styled.div`
   background-color: ${({ theme }) => theme.bg};
   width: 100%;
-  height: 150vh;
+  min-height: 100vh;
   overflow-x: hidden;
   position: relative;
 `;
