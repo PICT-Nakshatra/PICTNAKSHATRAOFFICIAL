@@ -110,7 +110,7 @@ const ImageDescription = styled.p`
 
 function ExpandingGallery({ items }) {
   // Use the first 6 items from the gallery data
-  const galleryItems = items.slice(0, 6).map((item, index) => ({
+  const galleryItems = items.slice(0, 4).map((item, index) => ({
     ...item,
     title: [
       "Stargazing Session",

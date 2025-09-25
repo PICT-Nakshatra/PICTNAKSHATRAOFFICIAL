@@ -83,6 +83,45 @@ export const items = [
   {
     url: "/IMG-20240927-WA0119.jpg",
   },
+  {
+    url: "/G1.jpeg",
+  },
+  {
+    url: "/G3.jpeg",
+  },
+  {
+    url: "/G4.jpeg",
+  },
+  {
+    url: "/G5.jpeg",
+  },
+  {
+    url: "/G6.jpeg",
+  },
+  {
+    url: "/G7.jpeg",
+  },
+  {
+    url: "/G8.jpeg",
+  },
+  {
+    url: "/G9.jpeg",
+  },
+  {
+    url: "/G10.jpeg",
+  },
+  {
+    url: "/G11.jpeg",
+  },
+  {
+    url: "/G12.jpeg",
+  },
+  {
+    url: "/G13.jpeg",
+  },
+  {
+    url: "/G14.jpeg",
+  },
 ];
 
 export const tabs = [
