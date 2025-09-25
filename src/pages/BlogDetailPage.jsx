@@ -111,9 +111,9 @@ const GalleryImage = styled.img`
 `;
 
 const MainImage = styled.div`
-  width: 100%;
-  height: 400px;
-  margin-bottom: 24px;
+  width: 400px;         
+  height: 400px;       
+  margin: 0 auto 24px; 
   border-radius: 12px;
   overflow: hidden;
 `;
@@ -121,8 +121,9 @@ const MainImage = styled.div`
 const MainImageDisplay = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover;  \
 `;
+
 
 const BlogDetailsPage = () => {
   const { id } = useParams();
