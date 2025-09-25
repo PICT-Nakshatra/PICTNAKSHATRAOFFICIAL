@@ -16,14 +16,14 @@ import Gallery from "./pages/Gallery";
 import { AuthProvider } from "./contexts/AuthContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import "react-toastify/dist/ReactToastify.css";
-import SmoothScroll from "./SmoothScroll";
+// import SmoothScroll from "./SmoothScroll";
 
 function App() {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
         <AuthProvider>
-          <SmoothScroll>
+          {/* <SmoothScroll> */}
             <ToastContainer
               position="top-right"
               autoClose={3000}
@@ -85,7 +85,7 @@ function App() {
                 />
               </Routes>
             </BrowserRouter>
-          </SmoothScroll>
+          {/* </SmoothScroll> */}
         </AuthProvider>
       </ThemeProvider>
     </>
