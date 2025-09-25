@@ -114,18 +114,18 @@ function ExpandingGallery({ items }) {
     ...item,
     title: [
       "Stargazing Session",
-      "Astrophotography Workshop", 
-      "Rocketry Challenge",
-      "Telescope Assembly",
-      "Planetarium Visit",
+      "Technical Workshop", 
+      "Volunteering",
+      "Rocketry Assembly",
+      "Inter-College Collaboration",
       "Astronomy Exhibition"
     ][index] || `Gallery Item ${index + 1}`,
     description: [
       "Exploring the night sky with our community",
-      "Capturing the beauty of distant galaxies",
-      "Building and launching model rockets",
-      "Learning telescope mechanics and optics",
-      "Immersive journey through the cosmos",
+      "Hands-on learning of AI tools and techniques",
+      "Collaborating as volunteers to build and launch model rockets",
+      "Hands-on assembly and teamwork to build model rockets",
+      "Collaborating across colleges to explore astronomy projects and ideas",
       "Showcasing astronomical discoveries"
     ][index] || "A glimpse into our astronomy activities"
   }));

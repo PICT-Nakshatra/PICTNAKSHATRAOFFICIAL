@@ -111,7 +111,7 @@ export const items = [
     url: "/G10.jpeg",
   },
   {
-    url: "/G11.jpeg",
+    url: "/G15.jpeg",
   },
   {
     url: "/G12.jpeg",
@@ -138,7 +138,7 @@ export const HomeItems = [
     url: "/G8.jpeg",
   },
   {
-    url: "WhatsApp Image 2024-07-09 at 13.27.54.jpg",
+    url: "G15.jpeg",
   },
   {
     url: "/IMG-20240927-WA0119.jpg",
